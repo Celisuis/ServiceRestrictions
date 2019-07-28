@@ -1,5 +1,6 @@
 ﻿using Harmony;
 using ServiceRestrictions.Helpers;
+using UnityEngine;
 
 namespace ServiceRestrictions.Patches
 {
@@ -9,6 +10,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             return DistrictHelper.CanTransfer(data.m_sourceBuilding, material, offer);
         }
     }
@@ -19,6 +21,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             return DistrictHelper.CanTransfer(data.m_sourceBuilding, material, offer);
         }
     }
@@ -29,6 +32,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             return DistrictHelper.CanTransfer(data.m_sourceBuilding, material, offer);
         }
     }
@@ -39,6 +43,8 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
+            Debug.Log("Start Transfer Called");
             return DistrictHelper.CanTransfer(data.m_sourceBuilding, material, offer);
         }
     }
@@ -49,6 +55,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             return DistrictHelper.CanTransfer(data.m_sourceBuilding, material, offer);
         }
     }
@@ -59,6 +66,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             return DistrictHelper.CanTransfer(data.m_sourceBuilding, material, offer);
         }
     }
@@ -69,6 +77,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             return DistrictHelper.CanTransfer(data.m_sourceBuilding, material, offer);
         }
     }
@@ -79,6 +88,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             return DistrictHelper.CanTransfer(data.m_sourceBuilding, material, offer);
         }
     }
@@ -89,6 +99,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             return DistrictHelper.CanTransfer(data.m_sourceBuilding, material, offer);
         }
     }
@@ -99,6 +110,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             return DistrictHelper.CanTransfer(data.m_sourceBuilding, material, offer);
         }
     }
@@ -109,6 +121,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             return DistrictHelper.CanTransfer(data.m_sourceBuilding, material, offer);
         }
     }
@@ -119,6 +132,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             return DistrictHelper.CanTransfer(data.m_sourceBuilding, material, offer);
         }
     }
@@ -129,6 +143,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             return DistrictHelper.CanTransfer(data.m_sourceBuilding, material, offer);
         }
     }
@@ -139,6 +154,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             return DistrictHelper.CanTransfer(data.m_sourceBuilding, material, offer);
         }
     }
@@ -149,6 +165,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             return DistrictHelper.CanTransfer(data.m_sourceBuilding, material, offer);
         }
     }
@@ -159,6 +176,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             return DistrictHelper.CanTransfer(data.m_sourceBuilding, material, offer);
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using ColossalFramework;
+using UnityEngine;
 
 namespace ServiceRestrictions.Helpers
 {
@@ -8,6 +9,8 @@ namespace ServiceRestrictions.Helpers
         public static void MoveRequest(ushort buildingID, ref Building data, TransferManager.TransferReason reason,
             TransferManager.TransferOffer offer)
         {
+
+            Debug.Log($"Move Requested from {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(BuildingManager.instance.m_buildings.m_buffer[buildingID].m_position))}");
             var buildingType = data.Info.m_buildingAI.GetType().BaseType;
 
             FastList<ushort> buildings = BuildingManager.instance.GetServiceBuildings(data.Info.GetService());
@@ -15,7 +18,7 @@ namespace ServiceRestrictions.Helpers
             if (buildings == null)
                 return;
 
-            bool moveRequest = reason == TransferManager.TransferReason.Fire ||
+            bool moveRequest = (reason == TransferManager.TransferReason.Fire ||
                                reason == TransferManager.TransferReason.Crime ||
                                reason == TransferManager.TransferReason.Dead ||
                                reason == TransferManager.TransferReason.Fire2 ||
@@ -28,7 +31,7 @@ namespace ServiceRestrictions.Helpers
                                reason == TransferManager.TransferReason.OutgoingMail ||
                                reason == TransferManager.TransferReason.SortedMail ||
                                reason == TransferManager.TransferReason.Mail ||
-                               reason == TransferManager.TransferReason.FloodWater;
+                               reason == TransferManager.TransferReason.FloodWater);
 
             for (ushort x = 0; x < buildings.m_size; x++)
             {

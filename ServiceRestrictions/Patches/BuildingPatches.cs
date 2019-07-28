@@ -10,6 +10,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort buildingID, ref Building data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             if (DistrictHelper.CanTransfer(buildingID, material, offer))
             {
                 Debug.Log("Transfer Request Accepted.");
@@ -30,6 +31,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort buildingID, ref Building data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             if (DistrictHelper.CanTransfer(buildingID, material, offer))
             {
                 Debug.Log($"Transfer Request Accepted from {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(data.m_position))}");
@@ -50,6 +52,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort buildingID, ref Building data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             if (DistrictHelper.CanTransfer(buildingID, material, offer))
             {
                 Debug.Log("Transfer Request Accepted.");
@@ -70,6 +73,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort buildingID, ref Building data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             if (DistrictHelper.CanTransfer(buildingID, material, offer))
             {
                 Debug.Log("Transfer Request Accepted.");
@@ -90,6 +94,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort buildingID, ref Building data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             if (DistrictHelper.CanTransfer(buildingID, material, offer))
             {
                 Debug.Log("Transfer Request Accepted.");
@@ -110,6 +115,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort buildingID, ref Building data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             if (DistrictHelper.CanTransfer(buildingID, material, offer))
             {
                 Debug.Log("Transfer Request Accepted.");
@@ -130,6 +136,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort buildingID, ref Building data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             if (DistrictHelper.CanTransfer(buildingID, material, offer))
             {
                 Debug.Log("Transfer Request Accepted.");
@@ -150,6 +157,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort buildingID, ref Building data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             if (DistrictHelper.CanTransfer(buildingID, material, offer))
             {
                 Debug.Log("Transfer Request Accepted.");
@@ -170,6 +178,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort buildingID, ref Building data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             if (DistrictHelper.CanTransfer(buildingID, material, offer))
             {
                 Debug.Log("Transfer Request Accepted.");
@@ -190,6 +199,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort buildingID, ref Building data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             if (DistrictHelper.CanTransfer(buildingID, material, offer))
             {
                 Debug.Log("Transfer Request Accepted.");
@@ -210,6 +220,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort buildingID, ref Building data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             if (DistrictHelper.CanTransfer(buildingID, material, offer))
             {
                 Debug.Log("Transfer Request Accepted.");
@@ -230,6 +241,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort buildingID, ref Building data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             if (DistrictHelper.CanTransfer(buildingID, material, offer))
             {
                 Debug.Log("Transfer Request Accepted.");
@@ -250,6 +262,7 @@ namespace ServiceRestrictions.Patches
         public static bool Prefix(ushort buildingID, ref Building data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
+            Debug.Log("Start Transfer Called");
             if (DistrictHelper.CanTransfer(buildingID, material, offer))
             {
                 Debug.Log("Transfer Request Accepted.");

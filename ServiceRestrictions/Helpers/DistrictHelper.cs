@@ -109,6 +109,8 @@ namespace ServiceRestrictions.Helpers
         public static bool CanTransfer(ushort sourceBuildingID, TransferManager.TransferReason reason,
             TransferManager.TransferOffer offer)
         {
+
+            Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} has requested a transfer check.");
             ushort targetBuildingID = offer.Building;
 
             var sourceBuilding = BuildingManager.instance.m_buildings.m_buffer[sourceBuildingID];
