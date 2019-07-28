@@ -5,6 +5,7 @@ using System.Text;
 
 namespace ServiceRestricter.Internal.Options
 {
+    [Serializable]
     public class ServiceBuildingOptions
     {
         public List<byte> CoveredDistricts;

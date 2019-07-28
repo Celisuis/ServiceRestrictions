@@ -66,8 +66,14 @@
     <Compile Include="Extensions\BuildingExtensions.cs" />
     <Compile Include="Extensions\LoadingExtension.cs" />
     <Compile Include="Extensions\SerializationExtension.cs" />
-    <Compile Include="GUI\RestrictedDistrictsPanel.cs" />
-    <Compile Include="GUI\RestrictedDistrictPanelWrapper.cs" />
+    <Compile Include="GUI\Campuses\CampusPanel.cs" />
+    <Compile Include="GUI\Campuses\CampusPanelWrapper.cs" />
+    <Compile Include="GUI\Industries\IndustriesPanel.cs" />
+    <Compile Include="GUI\Industries\IndustriesPanelWrapper.cs" />
+    <Compile Include="GUI\Parks\ParkPanelWrapper.cs" />
+    <Compile Include="GUI\Districts\RestrictedDistrictsPanel.cs" />
+    <Compile Include="GUI\Districts\RestrictedDistrictPanelWrapper.cs" />
+    <Compile Include="GUI\Parks\ParksPanel.cs" />
     <Compile Include="GUI\UITitlebar.cs" />
     <Compile Include="GUI\UIUtils.cs" />
     <Compile Include="Helpers\BuildingHelper.cs" />
@@ -83,5 +89,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

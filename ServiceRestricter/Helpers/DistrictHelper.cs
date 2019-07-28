@@ -61,6 +61,7 @@ namespace ServiceRestricter.Helpers
             return industryNames;
         }
 
+        
 
         public static List<string> RetrieveAllCampusNames()
         {
@@ -92,7 +93,19 @@ namespace ServiceRestricter.Helpers
             return 0;
         }
 
+        public static byte RetrieveParkIDFromName(string name)
+        {
+            for (byte x = 0; x < DistrictManager.instance.m_parks.m_buffer.Length; x++)
+            {
+                if (!DistrictManager.instance.m_parks.m_buffer[x].m_flags.IsFlagSet(DistrictPark.Flags.Created))
+                    continue;
 
+                if (DistrictManager.instance.GetParkName(x) == name)
+                    return x;
+            }
+
+            return 0;
+        }
         public static bool CanTransfer(ushort sourceBuildingID, TransferManager.TransferReason reason,
             TransferManager.TransferOffer offer)
         {
@@ -112,6 +125,9 @@ namespace ServiceRestricter.Helpers
 
             byte sourceBuildingDistrict = DistrictManager.instance.GetDistrict(sourceBuilding.m_position);
             byte targetBuildingDistrict = DistrictManager.instance.GetDistrict(targetBuilding.m_position);
+
+            if (targetBuildingDistrict == 0)
+                targetBuildingDistrict = DistrictManager.instance.GetPark(targetBuilding.m_position);
 
             if (sourceBuildingDistrict != 0 && !IsDistrictActive(sourceBuildingDistrict))
                 sourceBuildingDistrict = 0;

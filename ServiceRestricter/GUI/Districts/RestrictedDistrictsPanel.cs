@@ -18,6 +18,12 @@ namespace ServiceRestricter.GUI
 
         private List<UILabel> _labels;
 
+        internal IndustriesPanelWrapper IndustriesPanelWrapper;
+
+        internal ParkPanelWrapper ParkPanelWrapper;
+
+        internal CampusPanelWrapper CampusPanelWrapper;
+
         public override void Start()
         {
             base.Start();
@@ -91,9 +97,21 @@ namespace ServiceRestricter.GUI
                 }
             }, 0.6f));
 
-            Inputs.Add(UIUtils.CreateButton(this, "Parks", (component, e) => {}));
-            Inputs.Add(UIUtils.CreateButton(this, "Industries", (component, e) => { }));
-            Inputs.Add(UIUtils.CreateButton(this, "Campuses", (component, e) => { }));
+            Inputs.Add(UIUtils.CreateButton(this, "Parks", (component, e) => {}, 0.8f, 80f));
+            Inputs.Add(UIUtils.CreateButton(this, "Industries", (component, e) =>
+            {
+                if (IndustriesPanelWrapper != null)
+                {
+                    IndustriesPanelWrapper.isVisible = false;
+                    UIUtils.DeepDestroy(IndustriesPanelWrapper);
+                }
+                else
+                {
+                    IndustriesPanelWrapper =
+                        UIView.GetAView().AddUIComponent(typeof(IndustriesPanelWrapper)) as IndustriesPanelWrapper;
+                }
+            }, 0.8f, 80f));
+            Inputs.Add(UIUtils.CreateButton(this, "Campuses", (component, e) => { }, 0.8f, 80f));
 
             width = RestrictedDistrictPanelWrapper.Instance.width =
                 UiTitleBar.Instance.width = UiTitleBar.Instance.DragHandle.width = widestWidth;
@@ -115,13 +133,15 @@ namespace ServiceRestricter.GUI
 
         }
 
+        private float finalY;
+
         private void Align()
         {
             var inputX = width - UIUtils.FieldWidth - UIUtils.FieldMargin * 2;
 
             for (var x = 0; x < Inputs.Count; x++)
             {
-                var finalY = x * UIUtils.FieldHeight + UIUtils.FieldMargin * (x + 2);
+                 finalY = x * UIUtils.FieldHeight + UIUtils.FieldMargin * (x + 2);
 
                 if (x < _labels.Count)
                 {
@@ -136,27 +156,26 @@ namespace ServiceRestricter.GUI
             }
         }
 
+        private void AlignParksButton()
+        {
+            Inputs.Find(x => x.name == $"ParksButton").relativePosition = new Vector3(192f, finalY);
+        }
+
+        private void AlignIndustriesButton()
+        {
+            Inputs.Find(x => x.name == "IndustriesButton").relativePosition = new Vector3(102f, finalY);
+        }
+
+        private void AlignCampusesButton()
+        {
+            Inputs.Find(x => x.name == "CampusesButton").relativePosition = new Vector3(10f, finalY);
+        }
+
         private void AlignButtons()
         {
-            var inputX = width - UIUtils.FieldWidth - UIUtils.FieldMargin * 2;
-            Vector3 firstButtonPosition = Inputs.FirstOrDefault(x => x is UIButton).relativePosition;
-            Vector3 lastButtonPosition = firstButtonPosition;
-
-            for (var x = 0; x < Inputs.Count; x++)
-            {
-                if (!(Inputs[x] is UIButton))
-                    continue;
-
-                if (Inputs[x].relativePosition == firstButtonPosition)
-                    continue;
-
-                if (Inputs[x].relativePosition == lastButtonPosition)
-                    continue;
-
-                Inputs[x].relativePosition = new Vector3(lastButtonPosition.x - (Inputs[x].width - 5), lastButtonPosition.y);
-
-                lastButtonPosition = Inputs[x].relativePosition;
-            }
+           AlignParksButton();
+           AlignIndustriesButton();
+           AlignCampusesButton();
         }
 
 

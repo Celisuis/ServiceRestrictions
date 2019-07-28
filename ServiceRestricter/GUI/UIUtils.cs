@@ -64,7 +64,7 @@ namespace ServiceRestricter.GUI
             return checkBox;
         }
 
-        public static UICheckBox CreateEmptyingCheckbox(UIComponent parent, string name, PropertyChangedEventHandler<bool> handler)
+        public static UICheckBox CreateParkCheckbox(UIComponent parent, string name)
         {
             var checkBox = parent.AddUIComponent<UICheckBox>();
 
@@ -83,21 +83,21 @@ namespace ServiceRestricter.GUI
             checkBox.checkedBoxObject.size = new Vector2(16f, 16f);
             checkBox.checkedBoxObject.relativePosition = Vector3.zero;
 
-            checkBox.eventCheckChanged += handler;
+            checkBox.eventCheckChanged += OnParkCheckChanged;
 
-            checkBox.isChecked =
-                ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
-                    ServiceRestrictTool.instance.SelectedBuildingID, out var options) && options.RestrictEmptying;
+            checkBox.isChecked = ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
+                                     ServiceRestrictTool.instance.SelectedBuildingID, out var options) && options.CoveredDistricts.Contains(DistrictHelper.RetrieveDistrictIDFromName(name));
+
 
             return checkBox;
         }
 
-        public static UIButton CreateButton(UIComponent parent, string name, MouseEventHandler handler, float textScale = 0.8f)
+        public static UIButton CreateButton(UIComponent parent, string name, MouseEventHandler handler, float textScale = 0.8f, float width = FieldWidth)
         {
             var button = parent.AddUIComponent<UIButton>();
             button.name = $"{name}Button";
             button.text = name;
-            button.width = FieldWidth;
+            button.width = width;
             button.height = FieldHeight;
             button.textPadding = new RectOffset(0, 0, 5, 0);
             button.horizontalAlignment = UIHorizontalAlignment.Center;
@@ -114,7 +114,7 @@ namespace ServiceRestricter.GUI
             return button;
         }
 
-        public static UIButton CreateToggleButton(UIComponent parent, Vector3 offset, UIAlignAnchor anchor,
+        public static UIButton CreateToggleButton(UIComponent parent, Vector3 position, UIAlignAnchor anchor,
             MouseEventHandler handler)
         {
             var button = UIView.GetAView().AddUIComponent(typeof(UIButton)) as UIButton;
@@ -134,7 +134,7 @@ namespace ServiceRestricter.GUI
             button.pressedBgSprite = "ButtonMenuPressed";
             button.eventClick += handler;
             button.AlignTo(parent, anchor);
-            button.relativePosition += offset;
+            button.absolutePosition = position;
 
             return button;
         }
@@ -154,6 +154,33 @@ namespace ServiceRestricter.GUI
             else
             {
                 options.CoveredDistricts.Remove(DistrictHelper.RetrieveDistrictIDFromName(comp.name));
+            }
+
+            if (ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
+                ServiceRestrictTool.instance.SelectedBuildingID, out var _))
+                ServiceRestrictTool.instance.CustomServiceBuildingOptions[
+                    ServiceRestrictTool.instance.SelectedBuildingID] = options;
+            else
+            {
+                ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(ServiceRestrictTool.instance.SelectedBuildingID, options);
+            }
+        }
+
+        private static void OnParkCheckChanged(UIComponent comp, bool value)
+        {
+            ServiceBuildingOptions options =
+                ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
+                    ServiceRestrictTool.instance.SelectedBuildingID, out var props)
+                    ? props
+                    : new ServiceBuildingOptions();
+
+            if (value)
+            {
+                options.CoveredDistricts.Add(DistrictHelper.RetrieveParkIDFromName(comp.name));
+            }
+            else
+            {
+                options.CoveredDistricts.Remove(DistrictHelper.RetrieveParkIDFromName(comp.name));
             }
 
             if (ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(

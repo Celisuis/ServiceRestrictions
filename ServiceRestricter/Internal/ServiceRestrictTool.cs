@@ -49,14 +49,14 @@ namespace ServiceRestricter.Internal
             if (ServiceInfoPanel == null)
                 return;
 
-            AddButton(ServiceInfoPanel, out _toggleButton, new Vector3(0f, 24f, 0f));
+            AddButton(ServiceInfoPanel, out _toggleButton, new Vector3(1100f, 430f));
 
             _isPanelInitialized = true;
         }
 
-        private void AddButton(CityServiceWorldInfoPanel infoPanel, out UIButton button, Vector3 offset)
+        private void AddButton(CityServiceWorldInfoPanel infoPanel, out UIButton button, Vector3 position)
         {
-            button = UIUtils.CreateToggleButton(infoPanel.component, offset, UIAlignAnchor.BottomLeft, (component, e) =>
+            button = UIUtils.CreateToggleButton(infoPanel.component, position, UIAlignAnchor.BottomLeft, (component, e) =>
             {
                 InstanceID instanceID = (InstanceID) infoPanel.GetType()
                     .GetField("m_InstanceID", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(infoPanel);
