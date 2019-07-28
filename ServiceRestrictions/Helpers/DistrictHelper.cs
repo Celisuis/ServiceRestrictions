@@ -109,6 +109,7 @@ namespace ServiceRestrictions.Helpers
         public static bool CanTransfer(ushort sourceBuildingID, TransferManager.TransferReason reason,
             TransferManager.TransferOffer offer)
         {
+            bool canTransfer;
 
             Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} has requested a transfer check.");
             ushort targetBuildingID = offer.Building;
@@ -139,13 +140,22 @@ namespace ServiceRestrictions.Helpers
 
             if (!ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(sourceBuildingID,
                 out var options))
+            {
+                Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} has no options. Returning true.");
                 return true;
+            }
 
             if (options.CoveredDistricts.Count <= 0)
+            {
+                Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} has no restrictions. Returning true.");
                 return true;
+            }
 
             if (options.RestrictToSelf && targetBuildingDistrict != sourceBuildingDistrict)
+            {
+                Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} is restricted to it's own district. Returning false.");
                 return false;
+            }
 
             switch (reason)
             {
@@ -163,21 +173,25 @@ namespace ServiceRestrictions.Helpers
                 case TransferManager.TransferReason.SortedMail:
                 case TransferManager.TransferReason.Mail:
                 case TransferManager.TransferReason.FloodWater:
-                    return targetBuildingDistrict == 0 || targetBuildingDistrict == sourceBuildingDistrict ||
+                    canTransfer =  targetBuildingDistrict == 0 || targetBuildingDistrict == sourceBuildingDistrict ||
                            options.CoveredDistricts.Contains(targetBuildingDistrict);
-
+                    break;
                 case TransferManager.TransferReason.DeadMove:
                 case TransferManager.TransferReason.GarbageMove:
                 case TransferManager.TransferReason.SnowMove:
                 case TransferManager.TransferReason.CriminalMove:
                 case TransferManager.TransferReason.SickMove:
-                    return !options.RestrictEmptying || targetBuildingDistrict == 0 ||
+                    canTransfer =  !options.RestrictEmptying || targetBuildingDistrict == 0 ||
                            targetBuildingDistrict == sourceBuildingDistrict ||
                            options.CoveredDistricts.Contains(targetBuildingDistrict);
-
+                    break;
                 default:
-                    return true;
+                    canTransfer =  true;
+                    break;
             }
+
+            Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)}'s transfer request has returned: {canTransfer}");
+            return canTransfer;
         }
 
 
