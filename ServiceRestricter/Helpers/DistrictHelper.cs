@@ -16,14 +16,67 @@ namespace ServiceRestricter.Helpers
 
             for (byte x = 0; x < DistrictManager.instance.m_districts.m_buffer.Length; x++)
             {
-                if (DistrictManager.instance.m_districts.m_buffer[x].m_flags == 0)
+                if (!DistrictManager.instance.m_districts.m_buffer[x].m_flags.IsFlagSet(District.Flags.Created))
                     continue;
+
 
                 districtNamesList.Add(DistrictManager.instance.GetDistrictName(x));
             }
 
             return districtNamesList;
 
+        }
+
+        public static List<string> RetrieveAllParkNames()
+        {
+            List<string> parkNames = new List<string>();
+
+            for (byte x = 0; x < DistrictManager.instance.m_parks.m_buffer.Length; x++)
+            {
+                if (!DistrictManager.instance.m_parks.m_buffer[x].m_flags.IsFlagSet(DistrictPark.Flags.Created))
+                    continue;
+
+                if(DistrictManager.instance.m_parks.m_buffer[x].IsPark)
+                    parkNames.Add(DistrictManager.instance.GetParkName(x));
+                    
+            }
+
+            return parkNames;
+        }
+
+        public static List<string> RetrieveAllIndustryNames()
+        {
+            List<string> industryNames = new List<string>();
+
+            for (byte x = 0; x < DistrictManager.instance.m_parks.m_buffer.Length; x++)
+            {
+                if (!DistrictManager.instance.m_parks.m_buffer[x].m_flags.IsFlagSet(DistrictPark.Flags.Created))
+                    continue;
+
+                if (DistrictManager.instance.m_parks.m_buffer[x].IsIndustry)
+                    industryNames.Add(DistrictManager.instance.GetParkName(x));
+
+            }
+
+            return industryNames;
+        }
+
+
+        public static List<string> RetrieveAllCampusNames()
+        {
+            List<string> campusNames = new List<string>();
+
+            for (byte x = 0; x < DistrictManager.instance.m_parks.m_buffer.Length; x++)
+            {
+                if (!DistrictManager.instance.m_parks.m_buffer[x].m_flags.IsFlagSet(DistrictPark.Flags.Created))
+                    continue;
+
+                if (DistrictManager.instance.m_parks.m_buffer[x].IsCampus)
+                    campusNames.Add(DistrictManager.instance.GetParkName(x));
+
+            }
+
+            return campusNames;
         }
         public static byte RetrieveDistrictIDFromName(string name)
         {

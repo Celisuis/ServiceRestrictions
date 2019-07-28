@@ -48,6 +48,19 @@ namespace ServiceRestricter.GUI
             _titleLabel.textScale = 0.9f;
             _titleLabel.isInteractive = false;
 
+            _closeButton = AddUIComponent<UIButton>();
+            _closeButton.size = new Vector2(20, 20);
+            _closeButton.relativePosition = new Vector3(width - _closeButton.width - 10f, 10f);
+            _closeButton.normalBgSprite = "DeleteLineButton";
+            _closeButton.hoveredBgSprite = "DeleteLineButtonHovered";
+            _closeButton.pressedBgSprite = "DeleteLineButtonPressed";
+            _closeButton.eventClick += (component, param) =>
+            {
+
+                ServiceRestrictTool.instance.RestrictedDistrictsPanelWrapper.isVisible = false;
+                UIUtils.DeepDestroy(ServiceRestrictTool.instance.RestrictedDistrictsPanelWrapper);
+            };
+
         }
 
         public void RecenterElements()

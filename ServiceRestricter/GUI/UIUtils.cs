@@ -57,10 +57,9 @@ namespace ServiceRestricter.GUI
 
             checkBox.eventCheckChanged += OnCheckChanged;
 
-            checkBox.isChecked =
-                ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
-                    ServiceRestrictTool.instance.SelectedBuildingID, out var options) &&
-                options.CoveredDistricts.Contains(DistrictHelper.RetrieveDistrictIDFromName(name));
+            checkBox.isChecked = ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
+                                     ServiceRestrictTool.instance.SelectedBuildingID, out var options) && options.CoveredDistricts.Contains(DistrictHelper.RetrieveDistrictIDFromName(name));
+
 
             return checkBox;
         }
@@ -93,11 +92,34 @@ namespace ServiceRestricter.GUI
             return checkBox;
         }
 
-        public static UIButton CreateButton(UIComponent parent, string name, MouseEventHandler handler)
+        public static UIButton CreateButton(UIComponent parent, string name, MouseEventHandler handler, float textScale = 0.8f)
         {
             var button = parent.AddUIComponent<UIButton>();
             button.name = $"{name}Button";
             button.text = name;
+            button.width = FieldWidth;
+            button.height = FieldHeight;
+            button.textPadding = new RectOffset(0, 0, 5, 0);
+            button.horizontalAlignment = UIHorizontalAlignment.Center;
+            button.textVerticalAlignment = UIVerticalAlignment.Middle;
+            button.textScale = textScale;
+            button.atlas = UIView.GetAView().defaultAtlas;
+            button.normalBgSprite = "ButtonMenu";
+            button.disabledBgSprite = "ButtonMenuDisabled";
+            button.hoveredBgSprite = "ButtonMenuHovered";
+            button.focusedBgSprite = "ButtonMenu";
+            button.pressedBgSprite = "ButtonMenuPressed";
+            button.eventClick += handler;
+            
+            return button;
+        }
+
+        public static UIButton CreateToggleButton(UIComponent parent, Vector3 offset, UIAlignAnchor anchor,
+            MouseEventHandler handler)
+        {
+            var button = UIView.GetAView().AddUIComponent(typeof(UIButton)) as UIButton;
+            button.name = $"ServiceRestricterToggleButton";
+            button.text = "Districts";
             button.width = FieldWidth;
             button.height = FieldHeight;
             button.textPadding = new RectOffset(0, 0, 5, 0);
@@ -111,6 +133,8 @@ namespace ServiceRestricter.GUI
             button.focusedBgSprite = "ButtonMenu";
             button.pressedBgSprite = "ButtonMenuPressed";
             button.eventClick += handler;
+            button.AlignTo(parent, anchor);
+            button.relativePosition += offset;
 
             return button;
         }

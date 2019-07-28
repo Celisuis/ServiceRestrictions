@@ -7,8 +7,14 @@ namespace ServiceRestricter.Internal.Options
 {
     public class ServiceBuildingOptions
     {
-        public List<byte> CoveredDistricts = new List<byte>();
+        public List<byte> CoveredDistricts;
 
         public bool RestrictEmptying;
+
+        public ServiceBuildingOptions()
+        {
+            CoveredDistricts = new List<byte>();
+            RestrictEmptying = false;
+        }
     }
 }

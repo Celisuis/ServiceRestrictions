@@ -35,8 +35,6 @@ namespace ServiceRestricter.GUI
             if (instance.Building != ServiceRestrictTool.instance.SelectedBuildingID)
             {
                 UIUtils.DeepDestroy(this);
-                ServiceRestrictTool.instance.RestrictedDistrictsPanelWrapper = ServiceRestrictTool.instance
-                    .ServiceInfoPanel.component.AddUIComponent<RestrictedDistrictPanelWrapper>();
             }
         }
 

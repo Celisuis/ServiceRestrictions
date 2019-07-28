@@ -36,12 +36,15 @@
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\Games\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ColossalManaged">
       <HintPath>..\..\..\..\Games\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\ColossalManaged.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ICities">
       <HintPath>..\..\..\..\Games\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\ICities.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,20 +54,25 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\Games\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>..\..\..\..\Games\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Extensions\BuildingExtensions.cs" />
     <Compile Include="Extensions\LoadingExtension.cs" />
+    <Compile Include="Extensions\SerializationExtension.cs" />
     <Compile Include="GUI\RestrictedDistrictsPanel.cs" />
     <Compile Include="GUI\RestrictedDistrictPanelWrapper.cs" />
     <Compile Include="GUI\UITitlebar.cs" />
     <Compile Include="GUI\UIUtils.cs" />
     <Compile Include="Helpers\BuildingHelper.cs" />
     <Compile Include="Helpers\DistrictHelper.cs" />
+    <Compile Include="Internal\BuildingOptionsEntry.cs" />
     <Compile Include="Internal\Options\ServiceBuildingOptions.cs" />
     <Compile Include="Internal\ServiceRestrictTool.cs" />
     <Compile Include="Patches\BuildingPatches.cs" />

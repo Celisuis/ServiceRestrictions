@@ -36,6 +36,9 @@ namespace ServiceRestricter.GUI
 
             float widestWidth = 0f;
 
+            Inputs = new List<UIComponent>();
+            _labels = new List<UILabel>();
+
             foreach (var district in DistrictHelper.RetrieveAllDistrictNames().Where(x =>
                 x != DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(BuildingManager.instance.m_buildings.m_buffer[ServiceRestrictTool.instance.SelectedBuildingID].m_position))))
             {
@@ -76,7 +79,7 @@ namespace ServiceRestricter.GUI
 
                 options.RestrictEmptying = !options.RestrictEmptying;
 
-                button.normalBgSprite = options.RestrictEmptying ? "ListItemHighlight" : "ButtonMenu";
+                button.normalBgSprite = options.RestrictEmptying ? "ButtonMenuHovered" : "ButtonMenu";
 
                 if (ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
                     ServiceRestrictTool.instance.SelectedBuildingID, out var _))
@@ -86,13 +89,18 @@ namespace ServiceRestricter.GUI
                 {
                     ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(ServiceRestrictTool.instance.SelectedBuildingID, options);
                 }
-            }));
+            }, 0.6f));
+
+            Inputs.Add(UIUtils.CreateButton(this, "Parks", (component, e) => {}));
+            Inputs.Add(UIUtils.CreateButton(this, "Industries", (component, e) => { }));
+            Inputs.Add(UIUtils.CreateButton(this, "Campuses", (component, e) => { }));
 
             width = RestrictedDistrictPanelWrapper.Instance.width =
                 UiTitleBar.Instance.width = UiTitleBar.Instance.DragHandle.width = widestWidth;
 
             UiTitleBar.Instance.RecenterElements();
             Align();
+            AlignButtons();
 
             height = Inputs.Count * (UIUtils.FieldHeight + UIUtils.FieldMargin) + UIUtils.FieldMargin * 3;
 
@@ -125,6 +133,29 @@ namespace ServiceRestricter.GUI
                     ? new Vector3(inputX + (UIUtils.FieldWidth - Inputs[x].width) / 2,
                         finalY + (UIUtils.FieldHeight - Inputs[x].height) / 2)
                     : new Vector3(inputX, finalY);
+            }
+        }
+
+        private void AlignButtons()
+        {
+            var inputX = width - UIUtils.FieldWidth - UIUtils.FieldMargin * 2;
+            Vector3 firstButtonPosition = Inputs.FirstOrDefault(x => x is UIButton).relativePosition;
+            Vector3 lastButtonPosition = firstButtonPosition;
+
+            for (var x = 0; x < Inputs.Count; x++)
+            {
+                if (!(Inputs[x] is UIButton))
+                    continue;
+
+                if (Inputs[x].relativePosition == firstButtonPosition)
+                    continue;
+
+                if (Inputs[x].relativePosition == lastButtonPosition)
+                    continue;
+
+                Inputs[x].relativePosition = new Vector3(lastButtonPosition.x - (Inputs[x].width - 5), lastButtonPosition.y);
+
+                lastButtonPosition = Inputs[x].relativePosition;
             }
         }
 
