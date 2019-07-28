@@ -79,11 +79,11 @@ namespace ServiceRestrictions.GUI
             checkBox.checkedBoxObject.size = new Vector2(16f, 16f);
             checkBox.checkedBoxObject.relativePosition = Vector3.zero;
 
-            checkBox.eventCheckChanged += OnParkCheckChanged;
-
             checkBox.isChecked = ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
                                      ServiceRestrictTool.instance.SelectedBuildingID, out var options) &&
-                                 options.CoveredDistricts.Contains(DistrictHelper.RetrieveDistrictIDFromName(name));
+                                 options.CoveredDistricts.Contains(DistrictHelper.RetrieveParkIDFromName(name));
+
+            checkBox.eventCheckChanged += OnParkCheckChanged;
 
 
             return checkBox;
@@ -146,16 +146,12 @@ namespace ServiceRestrictions.GUI
                 if(value)
                 {
                     options.CoveredDistricts.Add(DistrictHelper.RetrieveDistrictIDFromName(comp.name));
-                    Debug.Log(
-                        $"Adding {comp.name} to {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(BuildingManager.instance.m_buildings.m_buffer[ServiceRestrictTool.instance.SelectedBuildingID].m_position))}'s Covered Districts List");
-
+                   
                 }
                 else
                 {
                     options.CoveredDistricts.Remove(DistrictHelper.RetrieveDistrictIDFromName(comp.name));
-                    Debug.Log(
-                        $"Removing {comp.name} to {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(BuildingManager.instance.m_buildings.m_buffer[ServiceRestrictTool.instance.SelectedBuildingID].m_position))}'s Covered Districts List");
-
+                   
                 }
 
             }
@@ -166,35 +162,42 @@ namespace ServiceRestrictions.GUI
 
                 ServiceBuildingOptions serviceBuildingOptions = new ServiceBuildingOptions();
                 serviceBuildingOptions.CoveredDistricts.Add(DistrictHelper.RetrieveDistrictIDFromName(comp.name));
-                Debug.Log(
-                    $"Adding {comp.name} to {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(BuildingManager.instance.m_buildings.m_buffer[ServiceRestrictTool.instance.SelectedBuildingID].m_position))}'s Covered Districts List");
-
+               
                 ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(
                     ServiceRestrictTool.instance.SelectedBuildingID, serviceBuildingOptions);
             }
+
 
         }
 
         private static void OnParkCheckChanged(UIComponent comp, bool value)
         {
-            ServiceBuildingOptions options =
-                ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
-                    ServiceRestrictTool.instance.SelectedBuildingID, out var props)
-                    ? props
-                    : new ServiceBuildingOptions();
-
-            if (value)
-                options.CoveredDistricts.Add(DistrictHelper.RetrieveParkIDFromName(comp.name));
-            else
-                options.CoveredDistricts.Remove(DistrictHelper.RetrieveParkIDFromName(comp.name));
-
             if (ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
-                ServiceRestrictTool.instance.SelectedBuildingID, out var _))
-                ServiceRestrictTool.instance.CustomServiceBuildingOptions[
-                    ServiceRestrictTool.instance.SelectedBuildingID] = options;
+                ServiceRestrictTool.instance.SelectedBuildingID, out var options))
+            {
+                if (value)
+                {
+                    options.CoveredDistricts.Add(DistrictHelper.RetrieveParkIDFromName(comp.name));
+
+                }
+                else
+                {
+                    options.CoveredDistricts.Remove(DistrictHelper.RetrieveParkIDFromName(comp.name));
+
+                }
+
+            }
             else
+            {
+                if (!value)
+                    return;
+
+                ServiceBuildingOptions serviceBuildingOptions = new ServiceBuildingOptions();
+                serviceBuildingOptions.CoveredDistricts.Add(DistrictHelper.RetrieveParkIDFromName(comp.name));
+
                 ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(
-                    ServiceRestrictTool.instance.SelectedBuildingID, options);
+                    ServiceRestrictTool.instance.SelectedBuildingID, serviceBuildingOptions);
+            }
         }
     }
 }

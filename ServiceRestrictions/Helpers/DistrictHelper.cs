@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ColossalFramework;
 using ServiceRestrictions.Internal;
+using UnityEngine;
 
 namespace ServiceRestrictions.Helpers
 {
@@ -75,12 +76,16 @@ namespace ServiceRestrictions.Helpers
         {
             for (byte x = 0; x < DistrictManager.instance.m_districts.m_buffer.Length; x++)
             {
-                if (DistrictManager.instance.m_districts.m_buffer[x].m_flags.IsFlagSet(District.Flags.Created))
+                if (!DistrictManager.instance.m_districts.m_buffer[x].m_flags.IsFlagSet(District.Flags.Created))
                     continue;
 
-                if (DistrictManager.instance.GetDistrictName(x) == name)
-                    return x;
+                if (DistrictManager.instance.GetDistrictName(x) != name)
+                    continue;
+
+                return x;
+
             }
+
 
             return 0;
         }
@@ -98,6 +103,8 @@ namespace ServiceRestrictions.Helpers
 
             return 0;
         }
+
+
 
         public static bool CanTransfer(ushort sourceBuildingID, TransferManager.TransferReason reason,
             TransferManager.TransferOffer offer)
@@ -134,6 +141,9 @@ namespace ServiceRestrictions.Helpers
 
             if (options.CoveredDistricts.Count <= 0)
                 return true;
+
+            if (options.RestrictToSelf && targetBuildingDistrict != sourceBuildingDistrict)
+                return false;
 
             switch (reason)
             {

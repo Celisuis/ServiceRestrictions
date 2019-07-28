@@ -10,10 +10,13 @@ namespace ServiceRestrictions.Internal.Options
 
         public bool RestrictEmptying;
 
+        public bool RestrictToSelf;
+
         public ServiceBuildingOptions()
         {
             CoveredDistricts = new List<byte>();
             RestrictEmptying = false;
+            RestrictToSelf = false;
         }
     }
 }
