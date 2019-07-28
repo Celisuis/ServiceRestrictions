@@ -74,7 +74,6 @@
     <Compile Include="GUI\Districts\RestrictedDistrictsPanel.cs" />
     <Compile Include="GUI\Districts\RestrictedDistrictPanelWrapper.cs" />
     <Compile Include="GUI\Parks\ParksPanel.cs" />
-    <Compile Include="GUI\ToggleButton.cs" />
     <Compile Include="GUI\UITitlebar.cs" />
     <Compile Include="GUI\UIUtils.cs" />
     <Compile Include="Helpers\BuildingHelper.cs" />

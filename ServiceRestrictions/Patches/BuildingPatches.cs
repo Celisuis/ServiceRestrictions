@@ -32,13 +32,13 @@ namespace ServiceRestrictions.Patches
         {
             if (DistrictHelper.CanTransfer(buildingID, material, offer))
             {
-                Debug.Log("Transfer Request Accepted.");
+                Debug.Log($"Transfer Request Accepted from {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(data.m_position))}");
                 return true;
             }
 
             BuildingHelper.MoveRequest(buildingID, ref data, material, offer);
             {
-                Debug.Log("Moving Transfer Request.");
+                Debug.Log($"Moving Transfer Request from {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(data.m_position))}");
                 return false;
             }
         }

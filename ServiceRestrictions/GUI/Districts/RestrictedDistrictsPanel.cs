@@ -89,6 +89,15 @@ namespace ServiceRestrictions.GUI.Districts
                 }
             }
 
+            Inputs.Add(UIUtils.CreateCheckbox(this, "zzThisDistrictOnly"));
+            var thisDistrictLabel = AddUIComponent<UILabel>();
+            thisDistrictLabel.name = "zzThisDistrictOnlyLabel";
+            thisDistrictLabel.text = "This District Only";
+            thisDistrictLabel.textScale = 0.9f;
+            thisDistrictLabel.isInteractive = false;
+
+            _labels.Add(thisDistrictLabel);
+
             Inputs.Sort((x, y) => x.name.CompareTo(y.name));
             _labels.Sort((x, y) => x.name.CompareTo(y.name));
 
