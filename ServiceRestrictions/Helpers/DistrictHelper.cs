@@ -148,16 +148,12 @@ namespace ServiceRestrictions.Helpers
 
             Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} has requested a transfer with {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(targetBuilding.m_position))}.");
 
+
+
             if (!ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(sourceBuildingID,
                 out var options))
             {
                 Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} has no options. Returning true.");
-                return true;
-            }
-
-            if (options.CoveredDistricts.Count <= 0)
-            {
-                Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} has no restrictions. Returning true.");
                 return true;
             }
 
@@ -166,6 +162,14 @@ namespace ServiceRestrictions.Helpers
                 Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} is restricted to it's own district. Returning false.");
                 return false;
             }
+
+            if (options.CoveredDistricts.Count <= 0)
+            {
+                Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} has no restrictions. Returning true.");
+                return true;
+            }
+
+           
 
             switch (reason)
             {
