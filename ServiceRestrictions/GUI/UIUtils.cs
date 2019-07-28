@@ -89,6 +89,35 @@ namespace ServiceRestrictions.GUI
             return checkBox;
         }
 
+        public static UICheckBox CreateThisDistrictCheckbox(UIComponent parent, string name, PropertyChangedEventHandler<bool> handler)
+        {
+            var checkBox = parent.AddUIComponent<UICheckBox>();
+
+            checkBox.name = name;
+            checkBox.width = 20f;
+            checkBox.height = 20f;
+            checkBox.relativePosition = Vector3.zero;
+
+            var sprite = checkBox.AddUIComponent<UISprite>();
+            sprite.spriteName = "ToggleBase";
+            sprite.size = new Vector2(16f, 16f);
+            sprite.relativePosition = new Vector3(2f, 2f);
+
+            checkBox.checkedBoxObject = sprite.AddUIComponent<UISprite>();
+            ((UISprite)checkBox.checkedBoxObject).spriteName = "ToggleBaseFocused";
+            checkBox.checkedBoxObject.size = new Vector2(16f, 16f);
+            checkBox.checkedBoxObject.relativePosition = Vector3.zero;
+
+            checkBox.isChecked = ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
+                                     ServiceRestrictTool.instance.SelectedBuildingID, out var options) &&
+                                 options.RestrictToSelf;
+
+            checkBox.eventCheckChanged += handler;
+
+
+            return checkBox;
+        }
+
         public static UIButton CreateButton(UIComponent parent, string name, MouseEventHandler handler,
             float textScale = 0.8f, float width = FieldWidth)
         {

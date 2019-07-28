@@ -89,7 +89,24 @@ namespace ServiceRestrictions.GUI.Districts
                 }
             }
 
-            Inputs.Add(UIUtils.CreateCheckbox(this, "zzThisDistrictOnly"));
+            Inputs.Add(UIUtils.CreateThisDistrictCheckbox(this, "zzThisDistrictOnly", (component, value) =>
+            {
+                ServiceBuildingOptions options =
+                    ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
+                        ServiceRestrictTool.instance.SelectedBuildingID, out var props)
+                        ? props
+                        : new ServiceBuildingOptions();
+
+                options.RestrictToSelf = !options.RestrictToSelf;
+
+                if (ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
+                    ServiceRestrictTool.instance.SelectedBuildingID, out var _))
+                    ServiceRestrictTool.instance.CustomServiceBuildingOptions[
+                        ServiceRestrictTool.instance.SelectedBuildingID] = options;
+                else
+                    ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(
+                        ServiceRestrictTool.instance.SelectedBuildingID, options);
+            }));
             var thisDistrictLabel = AddUIComponent<UILabel>();
             thisDistrictLabel.name = "zzThisDistrictOnlyLabel";
             thisDistrictLabel.text = "This District Only";

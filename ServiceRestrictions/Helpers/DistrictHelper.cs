@@ -112,19 +112,25 @@ namespace ServiceRestrictions.Helpers
             bool canTransfer;
 
             Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} has requested a transfer check.");
+
             ushort targetBuildingID = offer.Building;
 
             var sourceBuilding = BuildingManager.instance.m_buildings.m_buffer[sourceBuildingID];
 
-            if (offer.Building == 0 && offer.Citizen != 0)
-                targetBuildingID = CitizenManager.instance.m_citizens.m_buffer[offer.Citizen].GetBuildingByLocation();
-
             var targetBuilding = BuildingManager.instance.m_buildings.m_buffer[targetBuildingID];
 
             if (offer.Building == 0 && offer.Citizen != 0)
-                targetBuilding.m_position = CitizenManager.instance.m_instances
-                    .m_buffer[CitizenManager.instance.m_citizens.m_buffer[offer.Citizen].m_instance]
-                    .GetLastFramePosition();
+            {
+                targetBuildingID = CitizenManager.instance.m_citizens.m_buffer[offer.Citizen].GetBuildingByLocation();
+                targetBuilding = BuildingManager.instance.m_buildings.m_buffer[targetBuildingID];
+
+                if (targetBuildingID == 0)
+                {
+                    targetBuilding.m_position = CitizenManager.instance.m_instances
+                        .m_buffer[CitizenManager.instance.m_citizens.m_buffer[offer.Citizen].m_instance]
+                        .GetLastFramePosition();
+                }
+            }
 
             byte sourceBuildingDistrict = DistrictManager.instance.GetDistrict(sourceBuilding.m_position);
             byte targetBuildingDistrict = DistrictManager.instance.GetDistrict(targetBuilding.m_position);
@@ -137,6 +143,10 @@ namespace ServiceRestrictions.Helpers
 
             if (targetBuildingDistrict != 0 && !IsDistrictActive(targetBuildingDistrict))
                 targetBuildingDistrict = 0;
+
+            Debug.Log($"Found Target District ID: {targetBuildingDistrict}");
+
+            Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} has requested a transfer with {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(targetBuilding.m_position))}.");
 
             if (!ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(sourceBuildingID,
                 out var options))
