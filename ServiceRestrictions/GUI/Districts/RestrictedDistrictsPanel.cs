@@ -46,8 +46,14 @@ namespace ServiceRestrictions.GUI.Districts
 
             if (ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
                 ServiceRestrictTool.instance.SelectedBuildingID, out var options))
+            {
                 ((UIButton) Inputs.Find(x => x.name == "Restrict EmptyingButton")).normalBgSprite =
                     options.RestrictEmptying ? "ButtonMenuPressed" : "ButtonMenu";
+
+                ((UIButton) Inputs.Find(x => x.name == "InvertButton")).normalBgSprite =
+                    options.Inverted ? "ButtonMenuPressed" : "ButtonMenu";
+            }
+
         }
 
         private void Setup()
@@ -91,21 +97,22 @@ namespace ServiceRestrictions.GUI.Districts
 
             Inputs.Add(UIUtils.CreateThisDistrictCheckbox(this, "zzThisDistrictOnly", (component, value) =>
             {
-                ServiceBuildingOptions options =
-                    ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
-                        ServiceRestrictTool.instance.SelectedBuildingID, out var props)
-                        ? props
-                        : new ServiceBuildingOptions();
-
-                options.RestrictToSelf = !options.RestrictToSelf;
-
                 if (ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
-                    ServiceRestrictTool.instance.SelectedBuildingID, out var _))
-                    ServiceRestrictTool.instance.CustomServiceBuildingOptions[
-                        ServiceRestrictTool.instance.SelectedBuildingID] = options;
+                    ServiceRestrictTool.instance.SelectedBuildingID, out var options))
+                {
+                    options.RestrictToSelf = value;
+                }
                 else
-                    ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(
-                        ServiceRestrictTool.instance.SelectedBuildingID, options);
+                {
+                    if (!value)
+                        return;
+
+                    ServiceBuildingOptions newOptions = new ServiceBuildingOptions {RestrictToSelf = true};
+                    ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(ServiceRestrictTool.instance.SelectedBuildingID, newOptions);
+                }
+
+                Debug.Log($"Restrict To Self Status set to - {ServiceRestrictTool.instance.CustomServiceBuildingOptions[ServiceRestrictTool.instance.SelectedBuildingID].RestrictToSelf}");
+              
             }));
             var thisDistrictLabel = AddUIComponent<UILabel>();
             thisDistrictLabel.name = "zzThisDistrictOnlyLabel";
@@ -120,23 +127,33 @@ namespace ServiceRestrictions.GUI.Districts
 
             Inputs.Add(UIUtils.CreateButton(this, "Restrict Emptying", (component, e) =>
             {
-                ServiceBuildingOptions options =
-                    ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
-                        ServiceRestrictTool.instance.SelectedBuildingID, out var props)
-                        ? props
-                        : new ServiceBuildingOptions();
-
-                options.RestrictEmptying = !options.RestrictEmptying;
-
                 if (ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
-                    ServiceRestrictTool.instance.SelectedBuildingID, out var _))
-                    ServiceRestrictTool.instance.CustomServiceBuildingOptions[
-                        ServiceRestrictTool.instance.SelectedBuildingID] = options;
+                    ServiceRestrictTool.instance.SelectedBuildingID, out var options))
+                {
+                    options.RestrictEmptying = !options.RestrictEmptying;
+                }
                 else
-                    ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(
-                        ServiceRestrictTool.instance.SelectedBuildingID, options);
+                {
+
+                    ServiceBuildingOptions newOptions = new ServiceBuildingOptions { RestrictEmptying = true };
+                    ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(ServiceRestrictTool.instance.SelectedBuildingID, newOptions);
+                }
             }, 0.6f));
 
+            Inputs.Add(UIUtils.CreateButton(this, "Invert", (component, e) =>
+            {
+                if (ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
+                    ServiceRestrictTool.instance.SelectedBuildingID, out var options))
+                {
+                    options.Inverted = !options.Inverted;
+                }
+                else
+                {
+
+                    ServiceBuildingOptions newOptions = new ServiceBuildingOptions { Inverted = true };
+                    ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(ServiceRestrictTool.instance.SelectedBuildingID, newOptions);
+                }
+            }));
             Inputs.Add(UIUtils.CreateButton(this, "Parks", (component, e) =>
             {
                 if (ParkPanelWrapper != null)
@@ -230,11 +247,19 @@ namespace ServiceRestrictions.GUI.Districts
             Inputs.Find(x => x.name == "CampusesButton").relativePosition = new Vector3(10f, finalY);
         }
 
+        private void AlignInvertButton()
+        {
+            var restrictEmptyingButtonPosition = Inputs.Find(x => x.name == "Restrict EmptyingButton").relativePosition;
+
+            Inputs.Find(x => x.name == "InvertButton").relativePosition = new Vector3(restrictEmptyingButtonPosition.x - 200f, restrictEmptyingButtonPosition.y);
+        }
+
         private void AlignButtons()
         {
             AlignParksButton();
             AlignIndustriesButton();
             AlignCampusesButton();
+            AlignInvertButton();
         }
     }
 }

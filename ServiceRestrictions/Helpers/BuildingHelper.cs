@@ -6,7 +6,7 @@ namespace ServiceRestrictions.Helpers
 {
     public class BuildingHelper
     {
-        public static void MoveRequest(ushort buildingID, ref Building data, TransferManager.TransferReason reason,
+        public static bool MoveRequest(ushort buildingID, ref Building data, TransferManager.TransferReason reason,
             TransferManager.TransferOffer offer)
         {
 
@@ -16,7 +16,7 @@ namespace ServiceRestrictions.Helpers
             FastList<ushort> buildings = BuildingManager.instance.GetServiceBuildings(data.Info.GetService());
 
             if (buildings == null)
-                return;
+                return false;
 
             bool moveRequest = (reason == TransferManager.TransferReason.Fire ||
                                reason == TransferManager.TransferReason.Crime ||
@@ -59,8 +59,12 @@ namespace ServiceRestrictions.Helpers
                 if (moveRequest)
                 {
                     if (DistrictHelper.CanTransfer(targetBuildingId, reason, offer))
+                    {
                         targetBuilding.Info.m_buildingAI.StartTransfer(targetBuildingId, ref targetBuilding, reason,
                             offer);
+
+                        return true;
+                    }
                 }
                 else
                 {
@@ -68,9 +72,14 @@ namespace ServiceRestrictions.Helpers
                     offer.Position = targetBuilding.m_position;
 
                     if (DistrictHelper.CanTransfer(buildingID, reason, offer))
+                    {
                         data.Info.m_buildingAI.StartTransfer(buildingID, ref data, reason, offer);
+                        return true;
+                    }
                 }
             }
+
+            return false;
         }
 
         private static bool SpareVehicles(ushort buildingID, ref Building data)

@@ -148,8 +148,6 @@ namespace ServiceRestrictions.Helpers
 
             Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} has requested a transfer with {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(targetBuilding.m_position))}.");
 
-
-
             if (!ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(sourceBuildingID,
                 out var options))
             {
@@ -157,11 +155,20 @@ namespace ServiceRestrictions.Helpers
                 return true;
             }
 
-            if (options.RestrictToSelf && targetBuildingDistrict != sourceBuildingDistrict)
+            if (options.RestrictToSelf)
             {
-                Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} is restricted to it's own district. Returning false.");
-                return false;
+                if (options.Inverted)
+                {
+                    
+                    Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} has been inverted. It can no longer serve it's own district.");
+                    return targetBuildingDistrict != sourceBuildingDistrict;
+
+                }
+
+                Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} is restricted to it's own district.");
+                return targetBuildingDistrict == sourceBuildingDistrict;
             }
+
 
             if (options.CoveredDistricts.Count <= 0)
             {
@@ -169,6 +176,11 @@ namespace ServiceRestrictions.Helpers
                 return true;
             }
 
+            if (options.Inverted)
+            {
+                Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)}'S options are inverted.");
+                return !options.CoveredDistricts.Contains(targetBuildingDistrict);
+            }
            
 
             switch (reason)
