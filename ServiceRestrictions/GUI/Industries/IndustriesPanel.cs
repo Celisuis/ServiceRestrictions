@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using ColossalFramework.UI;
-using ServiceRestrictions.GUI.Campuses;
 using ServiceRestrictions.GUI.Districts;
 using ServiceRestrictions.Helpers;
 using UnityEngine;

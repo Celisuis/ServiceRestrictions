@@ -138,12 +138,12 @@ namespace ServiceRestrictions.Helpers
             if (targetBuildingDistrict == 0)
                 targetBuildingDistrict = DistrictManager.instance.GetPark(targetBuilding.m_position);
 
-            if (sourceBuildingDistrict != 0 && !IsDistrictActive(sourceBuildingDistrict))
-                sourceBuildingDistrict = 0;
 
-            if (targetBuildingDistrict != 0 && !IsDistrictActive(targetBuildingDistrict))
-                targetBuildingDistrict = 0;
-
+            if (targetBuildingDistrict == 0)
+            {
+                Debug.Log($"Target District does not exist. Returning true.");
+                return true;
+            }
             Debug.Log($"Found Target District ID: {targetBuildingDistrict}");
 
             Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} has requested a transfer with {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(targetBuilding.m_position))}.");
@@ -221,10 +221,6 @@ namespace ServiceRestrictions.Helpers
         }
 
 
-        private static bool IsDistrictActive(byte districtID)
-        {
-            return districtID != 0 && DistrictManager.instance.m_districts.m_buffer[districtID].m_flags
-                       .IsFlagSet(District.Flags.Created);
-        }
+       
     }
 }

@@ -16,7 +16,10 @@ namespace ServiceRestrictions.Helpers
             FastList<ushort> buildings = BuildingManager.instance.GetServiceBuildings(data.Info.GetService());
 
             if (buildings == null)
+            {
+                Debug.Log($"No other buildings of Type: {data.Info.GetService().ToString()}");
                 return false;
+            }
 
             bool moveRequest = (reason == TransferManager.TransferReason.Fire ||
                                reason == TransferManager.TransferReason.Crime ||
@@ -33,7 +36,7 @@ namespace ServiceRestrictions.Helpers
                                reason == TransferManager.TransferReason.Mail ||
                                reason == TransferManager.TransferReason.FloodWater);
 
-            for (ushort x = 0; x < buildings.m_size; x++)
+            for (ushort x = 0; x < buildings.m_buffer.Length; x++)
             {
                 ushort targetBuildingId = buildings.m_buffer[x];
 
@@ -63,6 +66,7 @@ namespace ServiceRestrictions.Helpers
                         targetBuilding.Info.m_buildingAI.StartTransfer(targetBuildingId, ref targetBuilding, reason,
                             offer);
 
+                        Debug.Log($"Request transferred to {BuildingManager.instance.GetBuildingName(targetBuildingId, InstanceID.Empty)} in {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(targetBuilding.m_position))}");
                         return true;
                     }
                 }
@@ -73,12 +77,14 @@ namespace ServiceRestrictions.Helpers
 
                     if (DistrictHelper.CanTransfer(buildingID, reason, offer))
                     {
+                        Debug.Log($"Request transferred to {BuildingManager.instance.GetBuildingName(targetBuildingId, InstanceID.Empty)} in {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(targetBuilding.m_position))}");
                         data.Info.m_buildingAI.StartTransfer(buildingID, ref data, reason, offer);
                         return true;
                     }
                 }
             }
 
+            Debug.Log("Couldn't transfer request.");
             return false;
         }
 
@@ -91,7 +97,7 @@ namespace ServiceRestrictions.Helpers
 
             string lastIndex = stats.Substring(stats.LastIndexOf(':') + 2);
 
-            Match match = new Regex(@"(\d+)\D+(\d+)").Match(stats);
+            Match match = new Regex(@"(\d+)\D+(\d+)").Match(lastIndex);
 
             if (match.Success)
             {

@@ -88,27 +88,6 @@ namespace ServiceRestrictions.Patches
         }
     }
 
-    [HarmonyPatch(typeof(MedicalCenterAI), "StartTransfer")]
-    public static class MedicalCenterTransferPatch
-    {
-        public static bool Prefix(ushort buildingID, ref Building data, TransferManager.TransferReason material,
-            TransferManager.TransferOffer offer)
-        {
-            Debug.Log("Start Transfer Called");
-            if (DistrictHelper.CanTransfer(buildingID, material, offer))
-            {
-                Debug.Log("Transfer Request Accepted.");
-                return true;
-            }
-
-            BuildingHelper.MoveRequest(buildingID, ref data, material, offer);
-            {
-                Debug.Log("Moving Transfer Request.");
-                return false;
-            }
-        }
-    }
-
     [HarmonyPatch(typeof(LandfillSiteAI), "StartTransfer")]
     public static class LandfillSiteTransferPatch
     {
@@ -259,17 +238,17 @@ namespace ServiceRestrictions.Patches
     [HarmonyPatch(typeof(TaxiStandAI), "StartTransfer")]
     public static class TaxiStandTransferPatch
     {
-        public static bool Prefix(ushort buildingID, ref Building data, TransferManager.TransferReason reason,
+        public static bool Prefix(ushort buildingID, ref Building data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
             Debug.Log("Start Transfer Called");
-            if (DistrictHelper.CanTransfer(buildingID, reason, offer))
+            if (DistrictHelper.CanTransfer(buildingID, material, offer))
             {
                 Debug.Log("Transfer Request Accepted.");
                 return true;
             }
 
-            BuildingHelper.MoveRequest(buildingID, ref data, reason, offer);
+            BuildingHelper.MoveRequest(buildingID, ref data, material, offer);
             {
                 Debug.Log("Moving Transfer Request.");
                 return false;
@@ -280,17 +259,17 @@ namespace ServiceRestrictions.Patches
     [HarmonyPatch(typeof(DepotAI), "StartTransfer")]
     public static class DepotAITransferPatch
     {
-        public static bool Prefix(ushort buildingID, ref Building data, TransferManager.TransferReason reason,
+        public static bool Prefix(ushort buildingID, ref Building data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
             Debug.Log("Start Transfer Called");
-            if (DistrictHelper.CanTransfer(buildingID, reason, offer))
+            if (DistrictHelper.CanTransfer(buildingID, material, offer))
             {
                 Debug.Log("Transfer Request Accepted.");
                 return true;
             }
 
-            BuildingHelper.MoveRequest(buildingID, ref data, reason, offer);
+            BuildingHelper.MoveRequest(buildingID, ref data, material, offer);
             {
                 Debug.Log("Moving Transfer Request.");
                 return false;

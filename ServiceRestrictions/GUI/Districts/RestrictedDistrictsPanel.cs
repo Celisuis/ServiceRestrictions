@@ -44,15 +44,16 @@ namespace ServiceRestrictions.GUI.Districts
                 DistrictHelper.RetrieveAllIndustryNames().Count > 0;
             Inputs.Find(x => x.name == "ParksButton").isEnabled = DistrictHelper.RetrieveAllParkNames().Count > 0;
 
-            if (ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
+            if (!ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
                 ServiceRestrictTool.instance.SelectedBuildingID, out var options))
-            {
-                ((UIButton) Inputs.Find(x => x.name == "Restrict EmptyingButton")).normalBgSprite =
-                    options.RestrictEmptying ? "ButtonMenuPressed" : "ButtonMenu";
+                return;
+            
+            ((UIButton) Inputs.Find(x => x.name == "Restrict EmptyingButton")).normalBgSprite = 
+                    options.RestrictEmptying ? "ListItemHighlight" : "ButtonMenu";
 
-                ((UIButton) Inputs.Find(x => x.name == "InvertButton")).normalBgSprite =
-                    options.Inverted ? "ButtonMenuPressed" : "ButtonMenu";
-            }
+            ((UIButton) Inputs.Find(x => x.name == "InvertButton")).normalBgSprite =
+                    options.Inverted ? "ListItemHighlight" : "ButtonMenu";
+            
 
         }
 
@@ -251,7 +252,7 @@ namespace ServiceRestrictions.GUI.Districts
         {
             var restrictEmptyingButtonPosition = Inputs.Find(x => x.name == "Restrict EmptyingButton").relativePosition;
 
-            Inputs.Find(x => x.name == "InvertButton").relativePosition = new Vector3(restrictEmptyingButtonPosition.x - 200f, restrictEmptyingButtonPosition.y);
+            Inputs.Find(x => x.name == "InvertButton").relativePosition = new Vector3(restrictEmptyingButtonPosition.x - Inputs.Find(x => x.name == "InvertButton").width - 15f, restrictEmptyingButtonPosition.y);
         }
 
         private void AlignButtons()

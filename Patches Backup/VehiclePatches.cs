@@ -38,7 +38,7 @@ namespace ServiceRestrictions.Patches
     }
 
     [HarmonyPatch(typeof(DisasterResponseVehicleAI), "StartTransfer")]
-    public static class DisasterResponseVehicleAIPatch
+    public static class DisasterResponseVehicleAI
     {
         public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
@@ -162,11 +162,11 @@ namespace ServiceRestrictions.Patches
     [HarmonyPatch(typeof(TaxiAI), "StartTransfer")]
     public static class TaxiTransferPatch
     {
-        public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason reason,
+        public static bool Prefix(ushort vehicleID, ref Vehicle data, TransferManager.TransferReason material,
             TransferManager.TransferOffer offer)
         {
             Debug.Log("Start Transfer Called");
-            return DistrictHelper.CanTransfer(data.m_sourceBuilding, reason, offer);
+            return DistrictHelper.CanTransfer(data.m_sourceBuilding, material, offer);
         }
     }
 
