@@ -21,29 +21,38 @@ namespace ServiceRestrictions.Extensions
 
             if (Input.GetKeyUp(KeyCode.Escape))
             {
-                if (RestrictedDistrictsPanel.Instance.CampusPanelWrapper != null)
+                if(RestrictedDistrictsPanel.Instance != null)
                 {
-                    RestrictedDistrictsPanel.Instance.CampusPanelWrapper.isVisible = false;
-                    UIUtils.DeepDestroy(RestrictedDistrictsPanel.Instance.CampusPanelWrapper);
-                    return;
+                    if (RestrictedDistrictsPanel.Instance.CampusPanelWrapper != null &&
+                        RestrictedDistrictsPanel.Instance.CampusPanelWrapper.isVisible)
+                    {
+                        RestrictedDistrictsPanel.Instance.CampusPanelWrapper.isVisible = false;
+                        UIUtils.DeepDestroy(RestrictedDistrictsPanel.Instance.CampusPanelWrapper);
+                        return;
+                    }
+
+                    if (RestrictedDistrictsPanel.Instance.IndustriesPanelWrapper != null &&
+                        RestrictedDistrictsPanel.Instance.IndustriesPanelWrapper.isVisible)
+                    {
+                        RestrictedDistrictsPanel.Instance.IndustriesPanelWrapper.isVisible = false;
+                        UIUtils.DeepDestroy(RestrictedDistrictsPanel.Instance.IndustriesPanelWrapper);
+                        return;
+                    }
+
+                    if (RestrictedDistrictsPanel.Instance.ParkPanelWrapper != null &&
+                        RestrictedDistrictsPanel.Instance.ParkPanelWrapper.isVisible)
+                    {
+                        RestrictedDistrictsPanel.Instance.ParkPanelWrapper.isVisible = false;
+                        UIUtils.DeepDestroy(RestrictedDistrictsPanel.Instance.ParkPanelWrapper);
+                        return;
+                    }
                 }
 
-                if (RestrictedDistrictsPanel.Instance.IndustriesPanelWrapper != null)
+                if (ServiceRestrictTool.instance.RestrictedDistrictsPanelWrapper != null && ServiceRestrictTool.instance.RestrictedDistrictsPanelWrapper.isVisible)
                 {
-                    RestrictedDistrictsPanel.Instance.IndustriesPanelWrapper.isVisible = false;
-                    UIUtils.DeepDestroy(RestrictedDistrictsPanel.Instance.IndustriesPanelWrapper);
-                    return;
+                    ServiceRestrictTool.instance.RestrictedDistrictsPanelWrapper.isVisible = false;
+                    UIUtils.DeepDestroy(ServiceRestrictTool.instance.RestrictedDistrictsPanelWrapper);
                 }
-
-                if (RestrictedDistrictsPanel.Instance.ParkPanelWrapper != null)
-                {
-                    RestrictedDistrictsPanel.Instance.ParkPanelWrapper.isVisible = false;
-                    UIUtils.DeepDestroy(RestrictedDistrictsPanel.Instance.ParkPanelWrapper);
-                    return;
-                }
-
-                ServiceRestrictTool.instance.RestrictedDistrictsPanelWrapper.isVisible = false;
-                UIUtils.DeepDestroy(ServiceRestrictTool.instance.RestrictedDistrictsPanelWrapper);
             }
         }
     }
