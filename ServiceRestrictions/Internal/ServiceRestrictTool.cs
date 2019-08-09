@@ -83,7 +83,8 @@ namespace ServiceRestrictions.Internal
                         UIUtils.DeepDestroy(RestrictedDistrictsPanelWrapper);
                     }
                 }
-            }
+            };
+
             _isPanelInitialized = true;
         }
 

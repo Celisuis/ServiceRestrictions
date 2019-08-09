@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ColossalFramework.UI;
+using ServiceRestrictions.Compatibility;
 using ServiceRestrictions.GUI.Campuses;
 using ServiceRestrictions.GUI.Industries;
 using ServiceRestrictions.GUI.Parks;
@@ -185,14 +186,11 @@ namespace ServiceRestrictions.GUI.Districts
                     ServiceRestrictTool.instance.SelectedBuildingID, out var options))
                     return;
 
-                Clipboard.CopyOptions(options);
+                Clipboard.CopyOptions(options, ServiceRestrictTool.instance.SelectedBuildingID);
             }, 0.6f));
 
 
             var copyButton = Inputs.Find(x => x.name == "Copy OptionsButton");
-
-            copyButton.tooltip = "Copies the existing options to the clipboard." + Environment.NewLine +
-                                 "This will overwrite any previous copied settings on the clipboard.";
 
             if (!ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
                 ServiceRestrictTool.instance.SelectedBuildingID, out var _))
@@ -200,6 +198,11 @@ namespace ServiceRestrictions.GUI.Districts
                 copyButton.isEnabled = false;
                 copyButton.tooltip = "No Options are present on this building.";
             }
+
+            copyButton.tooltip = "Copies the existing options to the clipboard." + Environment.NewLine +
+                                 "This will overwrite any previous copied settings on the clipboard.";
+
+           
 
             Inputs.Add(UIUtils.CreateButton(this, "Paste Options", (component, param) =>
             {
@@ -252,14 +255,17 @@ namespace ServiceRestrictions.GUI.Districts
             }, 0.6f));
 
             var pasteButton = Inputs.Find(x => x.name == "Paste OptionsButton");
-            pasteButton.tooltip = "Pastes the copied settings onto this building." + Environment.NewLine +
-                                  "This will overwrite this buildings current settings.";
 
             if (Clipboard.CopiedOptions == null)
             {
                 pasteButton.isEnabled = false;
                 pasteButton.tooltip = "No Options have been copied yet.";
             }
+
+            pasteButton.tooltip = $"Pastes the copied settings from {CustomizeItExtendedCompatibility.RetrieveBuildingName(Clipboard.CopiedBuildingID)} onto this building." + Environment.NewLine +
+                                  "This will overwrite this buildings current settings.";
+
+            
         }
 
         private void SetupButtons()

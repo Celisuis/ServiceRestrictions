@@ -42,5 +42,31 @@ namespace ServiceRestrictions.Compatibility
             return BuildingManager.instance.GetBuildingName(ServiceRestrictTool.instance.SelectedBuildingID,
                 InstanceID.Empty);
         }
+
+        public static string RetrieveBuildingName(ushort buildingID)
+        {
+
+            var info = BuildingManager.instance.m_buildings.m_buffer[buildingID]
+                .Info;
+
+            if (!IsCustomizeItExtendedActive())
+                return BuildingManager.instance.GetBuildingName(buildingID,
+                    InstanceID.Empty);
+
+            if (!CustomizeItExtendedAccess.CustomBuildingNames.TryGetValue(info.name, out var nameProps))
+                return BuildingManager.instance.GetBuildingName(buildingID,
+                    InstanceID.Empty);
+
+            if (nameProps.DefaultName &&
+                !nameProps.Unaffected.Contains(buildingID))
+                return nameProps.CustomName;
+
+            if (nameProps.Unaffected.Contains(buildingID))
+                return BuildingManager.instance.GetBuildingName(buildingID,
+                    InstanceID.Empty);
+
+            return BuildingManager.instance.GetBuildingName(buildingID,
+                InstanceID.Empty);
+        }
     }
 }

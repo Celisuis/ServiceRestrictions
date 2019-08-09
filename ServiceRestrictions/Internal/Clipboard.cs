@@ -10,7 +10,9 @@ namespace ServiceRestrictions.Internal
     {
         public static ServiceBuildingOptions CopiedOptions;
 
-        public static void CopyOptions(ServiceBuildingOptions options)
+        public static ushort CopiedBuildingID;
+
+        public static void CopyOptions(ServiceBuildingOptions options, ushort buildingID)
         {
             CopiedOptions = new ServiceBuildingOptions
             {
@@ -18,6 +20,8 @@ namespace ServiceRestrictions.Internal
                 Inverted = options.Inverted,
                 RestrictEmptying = options.RestrictEmptying,
             };
+
+            CopiedBuildingID = buildingID;
         }
 
         public static ServiceBuildingOptions PasteOptions()
