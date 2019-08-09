@@ -35,7 +35,7 @@ namespace ServiceRestrictions.Settings
                     return (ServiceRestrictionSettings) serializer.Deserialize(reader);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return new ServiceRestrictionSettings();
             }

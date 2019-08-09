@@ -46,7 +46,7 @@ namespace ServiceRestrictions
             {
                 _harmony.PatchAll(Assembly.GetExecutingAssembly());
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Debug.Log($"Couldn't Patch Service Restrictions.");
             }
