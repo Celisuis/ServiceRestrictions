@@ -42,6 +42,9 @@
       <HintPath>..\..\..\..\Games\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\ColossalManaged.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="CustomizeItExtended">
+      <HintPath>..\..\..\..\Games\Steam\steamapps\workshop\content\255710\1806759255\CustomizeItExtended.dll</HintPath>
+    </Reference>
     <Reference Include="ICities">
       <HintPath>..\..\..\..\Games\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\ICities.dll</HintPath>
       <Private>False</Private>
@@ -62,8 +65,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compatibility\CustomizeItExtendedCompatibility.cs" />
     <Compile Include="Extensions\ThreadingExtension.cs" />
+    <Compile Include="Internal\Clipboard.cs" />
     <Compile Include="Patches\BuildingPatches.cs" />
+    <Compile Include="Patches\CityServiceWorldInfoPanelPatches.cs" />
     <Compile Include="Patches\VehiclePatches.cs" />
     <Compile Include="ServiceRestrictionsMod.cs" />
     <Compile Include="Extensions\BuildingExtensions.cs" />

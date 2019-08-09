@@ -11,7 +11,7 @@ namespace ServiceRestrictions.Helpers
         {
             List<string> districtNamesList = new List<string>();
 
-            for (byte x = 0; x < DistrictManager.instance.m_districts.m_buffer.Length; x++)
+            for (byte x = 1; x < DistrictManager.instance.m_districts.m_buffer.Length; x++)
             {
                 if (!DistrictManager.instance.m_districts.m_buffer[x].m_flags.IsFlagSet(District.Flags.Created))
                     continue;
@@ -20,6 +20,7 @@ namespace ServiceRestrictions.Helpers
                 districtNamesList.Add(DistrictManager.instance.GetDistrictName(x));
             }
 
+            districtNamesList.Add("Areas without a district.");
             return districtNamesList;
         }
 
@@ -74,7 +75,7 @@ namespace ServiceRestrictions.Helpers
 
         public static byte RetrieveDistrictIDFromName(string name)
         {
-            for (byte x = 0; x < DistrictManager.instance.m_districts.m_buffer.Length; x++)
+            for (byte x = 1; x < DistrictManager.instance.m_districts.m_buffer.Length; x++)
             {
                 if (!DistrictManager.instance.m_districts.m_buffer[x].m_flags.IsFlagSet(District.Flags.Created))
                     continue;
@@ -154,21 +155,6 @@ namespace ServiceRestrictions.Helpers
                 Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} has no options. Returning true.");
                 return true;
             }
-
-            if (options.RestrictToSelf)
-            {
-                if (options.Inverted)
-                {
-                    
-                    Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} has been inverted. It can no longer serve it's own district.");
-                    return targetBuildingDistrict != sourceBuildingDistrict;
-
-                }
-
-                Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} is restricted to it's own district.");
-                return targetBuildingDistrict == sourceBuildingDistrict;
-            }
-
 
             if (options.CoveredDistricts.Count <= 0)
             {

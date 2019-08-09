@@ -64,6 +64,36 @@ namespace ServiceRestrictions.GUI
             return checkBox;
         }
 
+        public static UICheckBox CreateCheckbox(UIComponent parent, string name,
+            PropertyChangedEventHandler<bool> handler)
+        {
+            var checkBox = parent.AddUIComponent<UICheckBox>();
+
+            checkBox.name = name;
+            checkBox.width = 20f;
+            checkBox.height = 20f;
+            checkBox.relativePosition = Vector3.zero;
+
+            var sprite = checkBox.AddUIComponent<UISprite>();
+            sprite.spriteName = "ToggleBase";
+            sprite.size = new Vector2(16f, 16f);
+            sprite.relativePosition = new Vector3(2f, 2f);
+
+            checkBox.checkedBoxObject = sprite.AddUIComponent<UISprite>();
+            ((UISprite)checkBox.checkedBoxObject).spriteName = "ToggleBaseFocused";
+            checkBox.checkedBoxObject.size = new Vector2(16f, 16f);
+            checkBox.checkedBoxObject.relativePosition = Vector3.zero;
+
+            checkBox.isChecked =
+                ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
+                    ServiceRestrictTool.instance.SelectedBuildingID, out var options) && options.Inverted;
+
+            checkBox.eventCheckChanged += handler;
+
+
+            return checkBox;
+        }
+
         public static UICheckBox CreateParkCheckbox(UIComponent parent, string name)
         {
             var checkBox = parent.AddUIComponent<UICheckBox>();
@@ -93,34 +123,7 @@ namespace ServiceRestrictions.GUI
             return checkBox;
         }
 
-        public static UICheckBox CreateThisDistrictCheckbox(UIComponent parent, string name, PropertyChangedEventHandler<bool> handler)
-        {
-            var checkBox = parent.AddUIComponent<UICheckBox>();
-
-            checkBox.name = name;
-            checkBox.width = 20f;
-            checkBox.height = 20f;
-            checkBox.relativePosition = Vector3.zero;
-
-            var sprite = checkBox.AddUIComponent<UISprite>();
-            sprite.spriteName = "ToggleBase";
-            sprite.size = new Vector2(16f, 16f);
-            sprite.relativePosition = new Vector3(2f, 2f);
-
-            checkBox.checkedBoxObject = sprite.AddUIComponent<UISprite>();
-            ((UISprite)checkBox.checkedBoxObject).spriteName = "ToggleBaseFocused";
-            checkBox.checkedBoxObject.size = new Vector2(16f, 16f);
-            checkBox.checkedBoxObject.relativePosition = Vector3.zero;
-
-            checkBox.isChecked = ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
-                                     ServiceRestrictTool.instance.SelectedBuildingID, out var options) &&
-                                 options.RestrictToSelf;
-
-            checkBox.eventCheckChanged += handler;
-
-
-            return checkBox;
-        }
+        
 
         public static UIButton CreateButton(UIComponent parent, string name, MouseEventHandler handler,
             float textScale = 0.8f, float width = FieldWidth)
@@ -178,12 +181,15 @@ namespace ServiceRestrictions.GUI
             {
                 if(value)
                 {
-                    options.CoveredDistricts.Add(DistrictHelper.RetrieveDistrictIDFromName(comp.name));
-                   
+                    options.CoveredDistricts.Add(comp.name == "Areas without a district."
+                        ? (byte) 0
+                        : DistrictHelper.RetrieveDistrictIDFromName(comp.name));
                 }
                 else
                 {
-                    options.CoveredDistricts.Remove(DistrictHelper.RetrieveDistrictIDFromName(comp.name));
+                    options.CoveredDistricts.Remove(comp.name == "Areas without a district."
+                        ? (byte) 0
+                        : DistrictHelper.RetrieveDistrictIDFromName(comp.name));
                    
                 }
 
@@ -194,8 +200,10 @@ namespace ServiceRestrictions.GUI
                     return;
 
                 ServiceBuildingOptions serviceBuildingOptions = new ServiceBuildingOptions();
-                serviceBuildingOptions.CoveredDistricts.Add(DistrictHelper.RetrieveDistrictIDFromName(comp.name));
-               
+                serviceBuildingOptions.CoveredDistricts.Add(comp.name == "Areas without a district."
+                    ? (byte)0
+                    : DistrictHelper.RetrieveDistrictIDFromName(comp.name));
+
                 ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(
                     ServiceRestrictTool.instance.SelectedBuildingID, serviceBuildingOptions);
             }

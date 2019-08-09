@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ServiceRestrictions.Compatibility;
 using ServiceRestrictions.GUI.Districts;
 using ServiceRestrictions.Internal;
 using UnityEngine;
@@ -41,7 +42,8 @@ namespace ServiceRestrictions.GUI
             };
 
             _titleLabel = AddUIComponent<UILabel>();
-            _titleLabel.text = "District Restrictions";
+            _titleLabel.text =
+                $"{CustomizeItExtendedCompatibility.RetrieveBuildingName()}";
             _titleLabel.textScale = 0.9f;
             _titleLabel.isInteractive = false;
 

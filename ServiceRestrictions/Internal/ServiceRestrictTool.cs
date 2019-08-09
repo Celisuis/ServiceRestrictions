@@ -49,6 +49,41 @@ namespace ServiceRestrictions.Internal
 
             AddButton(ServiceInfoPanel, out _toggleButton, new Vector3(257f, 15f));
 
+            ServiceInfoPanel.component.eventIsEnabledChanged += (component, value) =>
+            {
+                if (!value)
+                {
+                    if (RestrictedDistrictsPanel.Instance != null)
+                    {
+                        if (RestrictedDistrictsPanel.Instance.CampusPanelWrapper != null &&
+                            RestrictedDistrictsPanel.Instance.CampusPanelWrapper.isVisible)
+                        {
+                            RestrictedDistrictsPanel.Instance.CampusPanelWrapper.isVisible = false;
+                            UIUtils.DeepDestroy(RestrictedDistrictsPanel.Instance.CampusPanelWrapper);
+                        }
+
+                        if (RestrictedDistrictsPanel.Instance.ParkPanelWrapper != null &&
+                            RestrictedDistrictsPanel.Instance.ParkPanelWrapper.isVisible)
+                        {
+                            RestrictedDistrictsPanel.Instance.ParkPanelWrapper.isVisible = false;
+                            UIUtils.DeepDestroy(RestrictedDistrictsPanel.Instance.ParkPanelWrapper);
+                        }
+
+                        if (RestrictedDistrictsPanel.Instance.IndustriesPanelWrapper != null &&
+                            RestrictedDistrictsPanel.Instance.IndustriesPanelWrapper.isVisible)
+                        {
+                            RestrictedDistrictsPanel.Instance.IndustriesPanelWrapper.isVisible = false;
+                            UIUtils.DeepDestroy(RestrictedDistrictsPanel.Instance.IndustriesPanelWrapper);
+                        }
+                    }
+
+                    if (RestrictedDistrictsPanelWrapper != null)
+                    {
+                        RestrictedDistrictsPanelWrapper.isVisible = false;
+                        UIUtils.DeepDestroy(RestrictedDistrictsPanelWrapper);
+                    }
+                }
+            }
             _isPanelInitialized = true;
         }
 
@@ -73,6 +108,11 @@ namespace ServiceRestrictions.Internal
                 if (component.hasFocus)
                     component.Unfocus();
             });
+        }
+
+        private void OnCloseEvent(bool value)
+        {
+
         }
     }
 }
