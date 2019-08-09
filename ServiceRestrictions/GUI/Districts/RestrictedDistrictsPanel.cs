@@ -52,7 +52,6 @@ namespace ServiceRestrictions.GUI.Districts
                     options.RestrictEmptying ? "ListItemHighlight" : "ButtonMenu";
 
             
-
         }
 
         private void Setup()
@@ -153,10 +152,6 @@ namespace ServiceRestrictions.GUI.Districts
             var building = BuildingManager.instance.m_buildings
                 .m_buffer[ServiceRestrictTool.instance.SelectedBuildingID].Info;
 
-            if (!building.m_buildingAI.CanBeEmptied())
-                return;
-
-
             Inputs.Add(UIUtils.CreateButton(this, "Restrict Emptying", (component, e) =>
             {
                 if (ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
@@ -171,6 +166,14 @@ namespace ServiceRestrictions.GUI.Districts
                     ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(ServiceRestrictTool.instance.SelectedBuildingID, newOptions);
                 }
             }, 0.6f));
+
+            var emptyButton = Inputs.Find(x => x.name == "Restrict EmptyingButton");
+
+            if (!building.m_buildingAI.CanBeEmptied())
+            {
+                emptyButton.isEnabled = false;
+                emptyButton.tooltip = "This Building doesn't require emptying.";
+            }
 
         }
 
@@ -204,7 +207,7 @@ namespace ServiceRestrictions.GUI.Districts
                     return;
 
                 if (!ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
-                    ServiceRestrictTool.instance.SelectedBuildingID, out var options))
+                    ServiceRestrictTool.instance.SelectedBuildingID, out var _))
                 {
                     ServiceBuildingOptions newOptions = Clipboard.PasteOptions();
 
@@ -345,12 +348,24 @@ namespace ServiceRestrictions.GUI.Districts
             Inputs.Find(x => x.name == "Invert").relativePosition = new Vector3(restrictEmptyingButtonPosition.x - Inputs.Find(x => x.name == "Invert").width - 15f, restrictEmptyingButtonPosition.y);
         }
 
+        private void AlignCopyButtons()
+        {
+            var campusButtonPosition = Inputs.Find(x => x.name == "CampusesButton").relativePosition;
+
+            Inputs.Find(x => x.name == "Copy OptionsButton").relativePosition = new Vector3(campusButtonPosition.x, finalY + 30f);
+
+            var parksButtonPosition = Inputs.Find(x => x.name == "ParksButton").relativePosition;
+
+            Inputs.Find(x => x.name == "Paste OptionsButton").relativePosition = new Vector3(parksButtonPosition.x, finalY + 30f);
+        }
+
         private void AlignButtons()
         {
             AlignParksButton();
             AlignIndustriesButton();
             AlignCampusesButton();
             AlignInvertButton();
+            AlignCopyButtons();
         }
     }
 }
