@@ -43,7 +43,7 @@ namespace ServiceRestrictions.GUI
 
             _titleLabel = AddUIComponent<UILabel>();
             _titleLabel.text =
-                $"{CustomizeItExtendedCompatibility.RetrieveBuildingName()}";
+                $"{CustomizeItExtendedCompatibility.RetrieveBuildingName()} Restrictions";
             _titleLabel.textScale = 0.9f;
             _titleLabel.isInteractive = false;
 
