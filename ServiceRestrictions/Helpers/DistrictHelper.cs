@@ -156,7 +156,7 @@ namespace ServiceRestrictions.Helpers
                 return true;
             }
 
-            if (options.CoveredDistricts.Count <= 0)
+            if (options.CoveredDistricts.Count <= 0 && options.CoveredParks.Count <= 0)
             {
                 Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)} has no restrictions. Returning true.");
                 return true;
@@ -165,7 +165,7 @@ namespace ServiceRestrictions.Helpers
             if (options.Inverted)
             {
                 Debug.Log($"{BuildingManager.instance.GetBuildingName(sourceBuildingID, InstanceID.Empty)}'S options are inverted.");
-                return !options.CoveredDistricts.Contains(targetBuildingDistrict);
+                return !options.CoveredDistricts.Contains(targetBuildingDistrict) || !options.CoveredParks.Contains(targetBuildingDistrict);
             }
            
 
@@ -186,7 +186,7 @@ namespace ServiceRestrictions.Helpers
                 case TransferManager.TransferReason.Mail:
                 case TransferManager.TransferReason.FloodWater:
                     canTransfer =  targetBuildingDistrict == 0 || targetBuildingDistrict == sourceBuildingDistrict ||
-                           options.CoveredDistricts.Contains(targetBuildingDistrict);
+                           options.CoveredDistricts.Contains(targetBuildingDistrict) || options.CoveredParks.Contains(targetBuildingDistrict);
                     break;
                 case TransferManager.TransferReason.DeadMove:
                 case TransferManager.TransferReason.GarbageMove:
@@ -195,7 +195,7 @@ namespace ServiceRestrictions.Helpers
                 case TransferManager.TransferReason.SickMove:
                     canTransfer =  !options.RestrictEmptying || targetBuildingDistrict == 0 ||
                            targetBuildingDistrict == sourceBuildingDistrict ||
-                           options.CoveredDistricts.Contains(targetBuildingDistrict);
+                           options.CoveredDistricts.Contains(targetBuildingDistrict) || options.CoveredParks.Contains(targetBuildingDistrict);
                     break;
                 default:
                     canTransfer =  true;

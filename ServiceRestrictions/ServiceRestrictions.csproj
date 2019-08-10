@@ -70,6 +70,7 @@
     <Compile Include="Internal\Clipboard.cs" />
     <Compile Include="Patches\BuildingPatches.cs" />
     <Compile Include="Patches\CityServiceWorldInfoPanelPatches.cs" />
+    <Compile Include="Patches\DistrictManagerPatches.cs" />
     <Compile Include="Patches\VehiclePatches.cs" />
     <Compile Include="ServiceRestrictionsMod.cs" />
     <Compile Include="Extensions\BuildingExtensions.cs" />

@@ -115,7 +115,7 @@ namespace ServiceRestrictions.GUI
 
             checkBox.isChecked = ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
                                      ServiceRestrictTool.instance.SelectedBuildingID, out var options) &&
-                                 options.CoveredDistricts.Contains(DistrictHelper.RetrieveParkIDFromName(name));
+                                 options.CoveredParks.Contains(DistrictHelper.RetrieveParkIDFromName(name));
 
             checkBox.eventCheckChanged += OnParkCheckChanged;
 
@@ -218,12 +218,12 @@ namespace ServiceRestrictions.GUI
             {
                 if (value)
                 {
-                    options.CoveredDistricts.Add(DistrictHelper.RetrieveParkIDFromName(comp.name));
+                    options.CoveredParks.Add(DistrictHelper.RetrieveParkIDFromName(comp.name));
 
                 }
                 else
                 {
-                    options.CoveredDistricts.Remove(DistrictHelper.RetrieveParkIDFromName(comp.name));
+                    options.CoveredParks.Remove(DistrictHelper.RetrieveParkIDFromName(comp.name));
 
                 }
 
@@ -234,7 +234,7 @@ namespace ServiceRestrictions.GUI
                     return;
 
                 ServiceBuildingOptions serviceBuildingOptions = new ServiceBuildingOptions();
-                serviceBuildingOptions.CoveredDistricts.Add(DistrictHelper.RetrieveParkIDFromName(comp.name));
+                serviceBuildingOptions.CoveredParks.Add(DistrictHelper.RetrieveParkIDFromName(comp.name));
 
                 ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(
                     ServiceRestrictTool.instance.SelectedBuildingID, serviceBuildingOptions);

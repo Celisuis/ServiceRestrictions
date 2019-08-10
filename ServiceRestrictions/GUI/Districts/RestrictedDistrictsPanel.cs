@@ -225,31 +225,40 @@ namespace ServiceRestrictions.GUI.Districts
 
                 foreach (var input in Inputs)
                 {
-                    if (input is UICheckBox checkbox && input.name != "aaThisDistrictOnly" && input.name != "Areas without a district.")
+                    if (input is UICheckBox checkbox)
                     {
-                        checkbox.isChecked =
-                            ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
-                                ServiceRestrictTool.instance.SelectedBuildingID, out var props) &&
-                            props.CoveredDistricts.Contains(DistrictHelper.RetrieveDistrictIDFromName(checkbox.name));
-                    }
-
-                    if (input.name == "Areas without a district.")
-                    {
-                        ((UICheckBox) input).isChecked =
-                            ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
-                                ServiceRestrictTool.instance.SelectedBuildingID, out var props) &&
-                            props.CoveredDistricts.Contains(0);
-                    }
-
-                    if (input.name == "aaThisDistrictOnly")
-                    {
-                        ((UICheckBox) input).isChecked =
-                            ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
-                                ServiceRestrictTool.instance.SelectedBuildingID, out var props) &&
-                            props.CoveredDistricts.Contains(DistrictHelper.RetrieveDistrictIDFromName(
-                                DistrictManager.instance.GetDistrictName(
-                                    DistrictManager.instance.GetDistrict(BuildingManager.instance.m_buildings
-                                        .m_buffer[ServiceRestrictTool.instance.SelectedBuildingID].m_position))));
+                        switch (checkbox.name)
+                        {
+                            case "Areas without a district.":
+                            {
+                                    checkbox.isChecked =
+                                        ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
+                                            ServiceRestrictTool.instance.SelectedBuildingID, out var props) &&
+                                        props.CoveredDistricts.Contains(0);
+                            }
+                                break;
+                            case "aaThisDistrictOnly":
+                            {
+                                checkbox.isChecked =
+                                    ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
+                                        ServiceRestrictTool.instance.SelectedBuildingID, out var props) &&
+                                    props.CoveredDistricts.Contains(DistrictHelper.RetrieveDistrictIDFromName(
+                                        DistrictManager.instance.GetDistrictName(
+                                            DistrictManager.instance.GetDistrict(BuildingManager.instance.m_buildings
+                                                .m_buffer[ServiceRestrictTool.instance.SelectedBuildingID]
+                                                .m_position))));
+                            }
+                                break;
+                            default:
+                            {
+                                checkbox.isChecked =
+                                    ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
+                                        ServiceRestrictTool.instance.SelectedBuildingID, out var props) &&
+                                    props.CoveredDistricts.Contains(DistrictHelper.RetrieveDistrictIDFromName(checkbox.name));
+                            }
+                                break;
+                        }
+                        
                     }
                 }
             }, 0.6f));

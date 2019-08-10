@@ -18,23 +18,21 @@ namespace ServiceRestrictions.Patches
 
             var building = BuildingManager.instance.m_buildings.m_buffer[instanceID.Building].Info;
 
-            if (building.m_buildingAI.GetType().IsInstanceOfType(typeof(ExtractingFacilityAI)) ||
-                building.m_buildingAI.GetType().IsInstanceOfType(typeof(ProcessingFacilityAI)) ||
-                building.m_buildingAI.GetType().IsInstanceOfType(typeof(AuxiliaryBuildingAI)) || 
-                building.m_buildingAI.GetType().IsInstanceOfType(typeof(MainIndustryBuildingAI)) || 
-                building.m_buildingAI.GetType().IsInstanceOfType(typeof(IndustryBuildingAI)) ||
-                building.m_buildingAI.GetType().IsInstanceOfType(typeof(MainCampusBuildingAI)) ||
-                building.m_buildingAI.GetType().IsInstanceOfType(typeof(ParkBuildingAI)) ||
-                building.m_buildingAI.GetType().IsInstanceOfType(typeof(ParkGateAI)))
-            {
 
-                var toggleButton = __instance.component.Find("ServiceRestrictionToggleButton") as UIButton;
+            if (building.GetService() == ItemClass.Service.FireDepartment ||
+                building.GetService() == ItemClass.Service.Garbage ||
+                building.GetService() == ItemClass.Service.HealthCare ||
+                building.GetService() == ItemClass.Service.Disaster ||
+                building.GetService() == ItemClass.Service.PoliceDepartment)
+                return;
 
-                if (toggleButton == null)
-                    return;
-                toggleButton.isEnabled = false;
-                toggleButton.tooltip = "Service Restrictions does not currently cover this building.";
-            }
+            var toggleButton = __instance.component.Find("ServiceRestrictionToggleButton") as UIButton;
+
+            if (toggleButton == null)
+                return;
+            toggleButton.isEnabled = false;
+            toggleButton.tooltip = "Service Restrictions does not currently cover this building.";
+
         }
     }
 }

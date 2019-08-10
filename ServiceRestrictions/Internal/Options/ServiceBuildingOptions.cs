@@ -8,6 +8,8 @@ namespace ServiceRestrictions.Internal.Options
     {
         public List<byte> CoveredDistricts;
 
+        public List<byte> CoveredParks;
+
         public bool RestrictToSelf;
 
         public bool RestrictEmptying;
@@ -17,6 +19,7 @@ namespace ServiceRestrictions.Internal.Options
         public ServiceBuildingOptions()
         {
             CoveredDistricts = new List<byte>();
+            CoveredParks = new List<byte>();
             RestrictEmptying = false;
             Inverted = false;
         }
