@@ -54,4 +54,20 @@ namespace ServiceRestrictions.Patches
             }
         }
     }
+
+    [HarmonyPatch(typeof(DistrictManager), "CreatePark")]
+    public static class CreateParkPatch
+    {
+        public static void Postfix(byte park)
+        {
+            if (ServiceRestrictionsMod.Settings.ParkMode ==
+                ServiceRestrictionSettings.NewDistrictMode.AlwaysCoverage)
+            {
+                for (ushort x = 0; x < ServiceRestrictTool.instance.CustomServiceBuildingOptions.Count; x++)
+                {
+                    ServiceRestrictTool.instance.CustomServiceBuildingOptions[x].CoveredParks.Add(park);
+                }
+            }
+        }
+    }
 }

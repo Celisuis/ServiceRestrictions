@@ -26,6 +26,8 @@ namespace ServiceRestrictions.Settings
 
         public NewDistrictMode DistrictMode;
 
+        public NewDistrictMode ParkMode;
+
         public void Save()
         {
             var serializer = new XmlSerializer(typeof(ServiceRestrictionSettings));
