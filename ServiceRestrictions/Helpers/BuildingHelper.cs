@@ -6,6 +6,23 @@ namespace ServiceRestrictions.Helpers
 {
     public class BuildingHelper
     {
+
+        public static bool DisplayDistrictsButton(BuildingAI ai)
+        {
+            switch (ai)
+            {
+                case MaintenanceDepotAI _:
+                case MedicalCenterAI _:
+                case SnowDumpAI _:
+                case PostOfficeAI _:
+                case TaxiStandAI _:
+                    return true;
+                default:
+                    return false;
+                
+            }
+        }
+
         public static bool MoveRequest(ushort buildingID, ref Building data, TransferManager.TransferReason reason,
             TransferManager.TransferOffer offer)
         {

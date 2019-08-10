@@ -4,7 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using ColossalFramework.UI;
+using CustomizeItExtended.Helpers;
 using Harmony;
+using BuildingHelper = ServiceRestrictions.Helpers.BuildingHelper;
 
 namespace ServiceRestrictions.Patches
 {
@@ -26,13 +28,15 @@ namespace ServiceRestrictions.Patches
                 building.GetService() == ItemClass.Service.PoliceDepartment)
                 return;
 
+            if (BuildingHelper.DisplayDistrictsButton(building.m_buildingAI))
+                return;
+
             var toggleButton = __instance.component.Find("ServiceRestrictionToggleButton") as UIButton;
 
             if (toggleButton == null)
                 return;
             toggleButton.isEnabled = false;
             toggleButton.tooltip = "Service Restrictions does not currently cover this building.";
-
         }
     }
 }
