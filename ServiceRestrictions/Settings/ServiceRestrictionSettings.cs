@@ -7,6 +7,16 @@ namespace ServiceRestrictions.Settings
 {
     public class ServiceRestrictionSettings
     {
+
+        public enum NewDistrictMode
+        {
+            NoCoverage,
+            CloseCoverage,
+            MediumCoverage,
+            FarCoverage,
+            AlwaysCoverage
+        }
+
         [XmlIgnore] private static readonly string ConfigPath =
             Path.Combine(DataLocation.localApplicationData, "ServiceRestrictSettings.xml");
 
@@ -14,6 +24,7 @@ namespace ServiceRestrictions.Settings
 
         public float PanelY = 65f;
 
+        public NewDistrictMode DistrictMode;
 
         public void Save()
         {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Harmony;
 using ServiceRestrictions.Internal;
+using ServiceRestrictions.Settings;
 
 namespace ServiceRestrictions.Patches
 {
@@ -33,6 +34,22 @@ namespace ServiceRestrictions.Patches
                 if (ServiceRestrictTool.instance.CustomServiceBuildingOptions[x].CoveredParks.Contains(park))
                 {
                     ServiceRestrictTool.instance.CustomServiceBuildingOptions[x].CoveredParks.Remove(park);
+                }
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(DistrictManager), "CreateDistrict")]
+    public static class CreateDistrictPatch
+    {
+        public static void Postfix(byte district)
+        {
+            if (ServiceRestrictionsMod.Settings.DistrictMode ==
+                ServiceRestrictionSettings.NewDistrictMode.AlwaysCoverage)
+            {
+                for (ushort x = 0; x < ServiceRestrictTool.instance.CustomServiceBuildingOptions.Count; x++)
+                {
+                    ServiceRestrictTool.instance.CustomServiceBuildingOptions[x].CoveredDistricts.Add(district);
                 }
             }
         }
