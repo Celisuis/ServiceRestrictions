@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Harmony;
+﻿using Harmony;
 using ServiceRestrictions.Internal;
 using ServiceRestrictions.Settings;
 
@@ -14,13 +10,8 @@ namespace ServiceRestrictions.Patches
         public static void Postfix(byte district)
         {
             for (ushort x = 0; x < ServiceRestrictTool.instance.CustomServiceBuildingOptions.Count; x++)
-            {
                 if (ServiceRestrictTool.instance.CustomServiceBuildingOptions[x].CoveredDistricts.Contains(district))
-                {
                     ServiceRestrictTool.instance.CustomServiceBuildingOptions[x].CoveredDistricts.Remove(district);
-                }
-
-            }
         }
     }
 
@@ -30,12 +21,8 @@ namespace ServiceRestrictions.Patches
         public static void Postfix(byte park)
         {
             for (ushort x = 0; x < ServiceRestrictTool.instance.CustomServiceBuildingOptions.Count; x++)
-            {
                 if (ServiceRestrictTool.instance.CustomServiceBuildingOptions[x].CoveredParks.Contains(park))
-                {
                     ServiceRestrictTool.instance.CustomServiceBuildingOptions[x].CoveredParks.Remove(park);
-                }
-            }
         }
     }
 
@@ -46,12 +33,8 @@ namespace ServiceRestrictions.Patches
         {
             if (ServiceRestrictionsMod.Settings.DistrictMode ==
                 ServiceRestrictionSettings.NewDistrictMode.AlwaysCoverage)
-            {
                 for (ushort x = 0; x < ServiceRestrictTool.instance.CustomServiceBuildingOptions.Count; x++)
-                {
                     ServiceRestrictTool.instance.CustomServiceBuildingOptions[x].CoveredDistricts.Add(district);
-                }
-            }
         }
     }
 
@@ -62,12 +45,8 @@ namespace ServiceRestrictions.Patches
         {
             if (ServiceRestrictionsMod.Settings.ParkMode ==
                 ServiceRestrictionSettings.NewDistrictMode.AlwaysCoverage)
-            {
                 for (ushort x = 0; x < ServiceRestrictTool.instance.CustomServiceBuildingOptions.Count; x++)
-                {
                     ServiceRestrictTool.instance.CustomServiceBuildingOptions[x].CoveredParks.Add(park);
-                }
-            }
         }
     }
 }

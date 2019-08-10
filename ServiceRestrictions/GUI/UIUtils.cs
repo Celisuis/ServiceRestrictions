@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using ColossalFramework.UI;
+﻿using ColossalFramework.UI;
 using ServiceRestrictions.Helpers;
 using ServiceRestrictions.Internal;
 using ServiceRestrictions.Internal.Options;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace ServiceRestrictions.GUI
 {
@@ -14,7 +11,6 @@ namespace ServiceRestrictions.GUI
         public const float FieldHeight = 23f;
         public const float FieldWidth = 100f;
         public const float FieldMargin = 5f;
-
 
 
         public static void DeepDestroy(UIComponent comp)
@@ -80,7 +76,7 @@ namespace ServiceRestrictions.GUI
             sprite.relativePosition = new Vector3(2f, 2f);
 
             checkBox.checkedBoxObject = sprite.AddUIComponent<UISprite>();
-            ((UISprite)checkBox.checkedBoxObject).spriteName = "ToggleBaseFocused";
+            ((UISprite) checkBox.checkedBoxObject).spriteName = "ToggleBaseFocused";
             checkBox.checkedBoxObject.size = new Vector2(16f, 16f);
             checkBox.checkedBoxObject.relativePosition = Vector3.zero;
 
@@ -123,7 +119,6 @@ namespace ServiceRestrictions.GUI
             return checkBox;
         }
 
-        
 
         public static UIButton CreateButton(UIComponent parent, string name, MouseEventHandler handler,
             float textScale = 0.8f, float width = FieldWidth)
@@ -175,24 +170,17 @@ namespace ServiceRestrictions.GUI
 
         private static void OnCheckChanged(UIComponent comp, bool value)
         {
-
             if (ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
                 ServiceRestrictTool.instance.SelectedBuildingID, out var options))
             {
-                if(value)
-                {
+                if (value)
                     options.CoveredDistricts.Add(comp.name == "Areas without a district."
                         ? (byte) 0
                         : DistrictHelper.RetrieveDistrictIDFromName(comp.name));
-                }
                 else
-                {
                     options.CoveredDistricts.Remove(comp.name == "Areas without a district."
                         ? (byte) 0
                         : DistrictHelper.RetrieveDistrictIDFromName(comp.name));
-                   
-                }
-
             }
             else
             {
@@ -201,14 +189,12 @@ namespace ServiceRestrictions.GUI
 
                 ServiceBuildingOptions serviceBuildingOptions = new ServiceBuildingOptions();
                 serviceBuildingOptions.CoveredDistricts.Add(comp.name == "Areas without a district."
-                    ? (byte)0
+                    ? (byte) 0
                     : DistrictHelper.RetrieveDistrictIDFromName(comp.name));
 
                 ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(
                     ServiceRestrictTool.instance.SelectedBuildingID, serviceBuildingOptions);
             }
-
-
         }
 
         private static void OnParkCheckChanged(UIComponent comp, bool value)
@@ -217,16 +203,9 @@ namespace ServiceRestrictions.GUI
                 ServiceRestrictTool.instance.SelectedBuildingID, out var options))
             {
                 if (value)
-                {
                     options.CoveredParks.Add(DistrictHelper.RetrieveParkIDFromName(comp.name));
-
-                }
                 else
-                {
                     options.CoveredParks.Remove(DistrictHelper.RetrieveParkIDFromName(comp.name));
-
-                }
-
             }
             else
             {

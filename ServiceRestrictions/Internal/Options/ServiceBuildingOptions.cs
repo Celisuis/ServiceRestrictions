@@ -10,11 +10,11 @@ namespace ServiceRestrictions.Internal.Options
 
         public List<byte> CoveredParks;
 
-        public bool RestrictToSelf;
+        public bool Inverted;
 
         public bool RestrictEmptying;
 
-        public bool Inverted;
+        public bool RestrictToSelf;
 
         public ServiceBuildingOptions()
         {

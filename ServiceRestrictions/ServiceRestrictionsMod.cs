@@ -2,7 +2,6 @@
 using System.Reflection;
 using Harmony;
 using ICities;
-using ServiceRestrictions.Patches;
 using ServiceRestrictions.Settings;
 using UnityEngine;
 
@@ -48,17 +47,15 @@ namespace ServiceRestrictions
             }
             catch (Exception)
             {
-                Debug.Log($"Couldn't Patch Service Restrictions.");
+                Debug.Log("Couldn't Patch Service Restrictions.");
             }
 
-            Debug.Log($"Successfully Patched Routines.");
+            Debug.Log("Successfully Patched Routines.");
         }
 
         public void OnDisabled()
         {
             _harmony.UnpatchAll();
         }
-
-      
     }
 }

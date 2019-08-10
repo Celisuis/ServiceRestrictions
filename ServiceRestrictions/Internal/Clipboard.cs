@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ServiceRestrictions.Internal.Options;
+﻿using ServiceRestrictions.Internal.Options;
 
 namespace ServiceRestrictions.Internal
 {
@@ -18,7 +14,7 @@ namespace ServiceRestrictions.Internal
             {
                 CoveredDistricts = options.CoveredDistricts,
                 Inverted = options.Inverted,
-                RestrictEmptying = options.RestrictEmptying,
+                RestrictEmptying = options.RestrictEmptying
             };
 
             CopiedBuildingID = buildingID;

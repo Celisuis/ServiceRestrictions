@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using ColossalFramework.Plugins;
 using CustomizeItExtended.External;
-using CustomizeItExtended.Internal.Buildings;
 using ServiceRestrictions.Internal;
 
 namespace ServiceRestrictions.Compatibility
@@ -19,7 +15,6 @@ namespace ServiceRestrictions.Compatibility
 
         public static string RetrieveBuildingName()
         {
-
             var info = BuildingManager.instance.m_buildings.m_buffer[ServiceRestrictTool.instance.SelectedBuildingID]
                 .Info;
 
@@ -45,7 +40,6 @@ namespace ServiceRestrictions.Compatibility
 
         public static string RetrieveBuildingName(ushort buildingID)
         {
-
             var info = BuildingManager.instance.m_buildings.m_buffer[buildingID]
                 .Info;
 

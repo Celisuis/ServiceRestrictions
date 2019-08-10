@@ -7,7 +7,6 @@ namespace ServiceRestrictions.Settings
 {
     public class ServiceRestrictionSettings
     {
-
         public enum NewDistrictMode
         {
             NoCoverage,
@@ -20,11 +19,11 @@ namespace ServiceRestrictions.Settings
         [XmlIgnore] private static readonly string ConfigPath =
             Path.Combine(DataLocation.localApplicationData, "ServiceRestrictSettings.xml");
 
+        public NewDistrictMode DistrictMode;
+
         public float PanelX = 8f;
 
         public float PanelY = 65f;
-
-        public NewDistrictMode DistrictMode;
 
         public NewDistrictMode ParkMode;
 

@@ -72,7 +72,8 @@ namespace ServiceRestrictions.GUI.Industries
             IndustriesPanelWrapper.Instance.height = height + UiIndustriesTitleBar.Instance.height;
 
             IndustriesPanelWrapper.Instance.relativePosition = new Vector3(
-                RestrictedDistrictPanelWrapper.Instance.relativePosition.x + IndustriesPanelWrapper.Instance.width + 20f,
+                RestrictedDistrictPanelWrapper.Instance.relativePosition.x + IndustriesPanelWrapper.Instance.width +
+                20f,
                 RestrictedDistrictPanelWrapper.Instance.relativePosition.y);
 
             isVisible = IndustriesPanelWrapper.Instance.isVisible =

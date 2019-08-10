@@ -6,7 +6,6 @@ namespace ServiceRestrictions.Helpers
 {
     public class BuildingHelper
     {
-
         public static bool DisplayDistrictsButton(BuildingAI ai)
         {
             switch (ai)
@@ -19,15 +18,14 @@ namespace ServiceRestrictions.Helpers
                     return true;
                 default:
                     return false;
-                
             }
         }
 
         public static bool MoveRequest(ushort buildingID, ref Building data, TransferManager.TransferReason reason,
             TransferManager.TransferOffer offer)
         {
-
-            Debug.Log($"Move Requested from {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(BuildingManager.instance.m_buildings.m_buffer[buildingID].m_position))}");
+            Debug.Log(
+                $"Move Requested from {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(BuildingManager.instance.m_buildings.m_buffer[buildingID].m_position))}");
             var buildingType = data.Info.m_buildingAI.GetType().BaseType;
 
             FastList<ushort> buildings = BuildingManager.instance.GetServiceBuildings(data.Info.GetService());
@@ -38,7 +36,7 @@ namespace ServiceRestrictions.Helpers
                 return false;
             }
 
-            bool moveRequest = (reason == TransferManager.TransferReason.Fire ||
+            bool moveRequest = reason == TransferManager.TransferReason.Fire ||
                                reason == TransferManager.TransferReason.Crime ||
                                reason == TransferManager.TransferReason.Dead ||
                                reason == TransferManager.TransferReason.Fire2 ||
@@ -51,7 +49,7 @@ namespace ServiceRestrictions.Helpers
                                reason == TransferManager.TransferReason.OutgoingMail ||
                                reason == TransferManager.TransferReason.SortedMail ||
                                reason == TransferManager.TransferReason.Mail ||
-                               reason == TransferManager.TransferReason.FloodWater);
+                               reason == TransferManager.TransferReason.FloodWater;
 
             for (ushort x = 0; x < buildings.m_buffer.Length; x++)
             {
@@ -83,7 +81,8 @@ namespace ServiceRestrictions.Helpers
                         targetBuilding.Info.m_buildingAI.StartTransfer(targetBuildingId, ref targetBuilding, reason,
                             offer);
 
-                        Debug.Log($"Request transferred to {BuildingManager.instance.GetBuildingName(targetBuildingId, InstanceID.Empty)} in {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(targetBuilding.m_position))}");
+                        Debug.Log(
+                            $"Request transferred to {BuildingManager.instance.GetBuildingName(targetBuildingId, InstanceID.Empty)} in {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(targetBuilding.m_position))}");
                         return true;
                     }
                 }
@@ -94,7 +93,8 @@ namespace ServiceRestrictions.Helpers
 
                     if (DistrictHelper.CanTransfer(buildingID, reason, offer))
                     {
-                        Debug.Log($"Request transferred to {BuildingManager.instance.GetBuildingName(targetBuildingId, InstanceID.Empty)} in {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(targetBuilding.m_position))}");
+                        Debug.Log(
+                            $"Request transferred to {BuildingManager.instance.GetBuildingName(targetBuildingId, InstanceID.Empty)} in {DistrictManager.instance.GetDistrictName(DistrictManager.instance.GetDistrict(targetBuilding.m_position))}");
                         data.Info.m_buildingAI.StartTransfer(buildingID, ref data, reason, offer);
                         return true;
                     }

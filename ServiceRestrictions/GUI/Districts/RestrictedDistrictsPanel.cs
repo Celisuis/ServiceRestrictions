@@ -48,11 +48,9 @@ namespace ServiceRestrictions.GUI.Districts
             if (!ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
                 ServiceRestrictTool.instance.SelectedBuildingID, out var options))
                 return;
-            
-            ((UIButton) Inputs.Find(x => x.name == "Restrict EmptyingButton")).normalBgSprite = 
-                    options.RestrictEmptying ? "ListItemHighlight" : "ButtonMenu";
 
-            
+            ((UIButton) Inputs.Find(x => x.name == "Restrict EmptyingButton")).normalBgSprite =
+                options.RestrictEmptying ? "ListItemHighlight" : "ButtonMenu";
         }
 
         private void Setup()
@@ -122,11 +120,12 @@ namespace ServiceRestrictions.GUI.Districts
                 else
                 {
                     ServiceBuildingOptions newOptions = new ServiceBuildingOptions {Inverted = true};
-                    ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(ServiceRestrictTool.instance.SelectedBuildingID, newOptions);
+                    ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(
+                        ServiceRestrictTool.instance.SelectedBuildingID, newOptions);
                 }
             }));
-         
-                
+
+
             SetupButtons();
             SetupCopyButtons();
 
@@ -162,9 +161,9 @@ namespace ServiceRestrictions.GUI.Districts
                 }
                 else
                 {
-
-                    ServiceBuildingOptions newOptions = new ServiceBuildingOptions { RestrictEmptying = true };
-                    ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(ServiceRestrictTool.instance.SelectedBuildingID, newOptions);
+                    ServiceBuildingOptions newOptions = new ServiceBuildingOptions {RestrictEmptying = true};
+                    ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(
+                        ServiceRestrictTool.instance.SelectedBuildingID, newOptions);
                 }
             }, 0.6f));
 
@@ -175,7 +174,6 @@ namespace ServiceRestrictions.GUI.Districts
                 emptyButton.isEnabled = false;
                 emptyButton.tooltip = "This Building doesn't require emptying.";
             }
-
         }
 
         private void SetupCopyButtons()
@@ -202,7 +200,6 @@ namespace ServiceRestrictions.GUI.Districts
             copyButton.tooltip = "Copies the existing options to the clipboard." + Environment.NewLine +
                                  "This will overwrite any previous copied settings on the clipboard.";
 
-           
 
             Inputs.Add(UIUtils.CreateButton(this, "Paste Options", (component, param) =>
             {
@@ -214,7 +211,8 @@ namespace ServiceRestrictions.GUI.Districts
                 {
                     ServiceBuildingOptions newOptions = Clipboard.PasteOptions();
 
-                    ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(ServiceRestrictTool.instance.SelectedBuildingID, newOptions);
+                    ServiceRestrictTool.instance.CustomServiceBuildingOptions.Add(
+                        ServiceRestrictTool.instance.SelectedBuildingID, newOptions);
                 }
                 else
                 {
@@ -224,17 +222,15 @@ namespace ServiceRestrictions.GUI.Districts
                 }
 
                 foreach (var input in Inputs)
-                {
                     if (input is UICheckBox checkbox)
-                    {
                         switch (checkbox.name)
                         {
                             case "Areas without a district.":
                             {
-                                    checkbox.isChecked =
-                                        ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
-                                            ServiceRestrictTool.instance.SelectedBuildingID, out var props) &&
-                                        props.CoveredDistricts.Contains(0);
+                                checkbox.isChecked =
+                                    ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
+                                        ServiceRestrictTool.instance.SelectedBuildingID, out var props) &&
+                                    props.CoveredDistricts.Contains(0);
                             }
                                 break;
                             case "aaThisDistrictOnly":
@@ -254,13 +250,11 @@ namespace ServiceRestrictions.GUI.Districts
                                 checkbox.isChecked =
                                     ServiceRestrictTool.instance.CustomServiceBuildingOptions.TryGetValue(
                                         ServiceRestrictTool.instance.SelectedBuildingID, out var props) &&
-                                    props.CoveredDistricts.Contains(DistrictHelper.RetrieveDistrictIDFromName(checkbox.name));
+                                    props.CoveredDistricts.Contains(
+                                        DistrictHelper.RetrieveDistrictIDFromName(checkbox.name));
                             }
                                 break;
                         }
-                        
-                    }
-                }
             }, 0.6f));
 
             var pasteButton = Inputs.Find(x => x.name == "Paste OptionsButton");
@@ -271,10 +265,10 @@ namespace ServiceRestrictions.GUI.Districts
                 pasteButton.tooltip = "No Options have been copied yet.";
             }
 
-            pasteButton.tooltip = $"Pastes the copied settings from {CustomizeItExtendedCompatibility.RetrieveBuildingName(Clipboard.CopiedBuildingID)} onto this building." + Environment.NewLine +
-                                  "This will overwrite this buildings current settings.";
-
-            
+            pasteButton.tooltip =
+                $"Pastes the copied settings from {CustomizeItExtendedCompatibility.RetrieveBuildingName(Clipboard.CopiedBuildingID)} onto this building." +
+                Environment.NewLine +
+                "This will overwrite this buildings current settings.";
         }
 
         private void SetupButtons()
@@ -320,6 +314,7 @@ namespace ServiceRestrictions.GUI.Districts
                 }
             }, 0.8f, 80f));
         }
+
         private void Align()
         {
             var inputX = width - UIUtils.FieldWidth - UIUtils.FieldMargin * 2;
@@ -360,18 +355,22 @@ namespace ServiceRestrictions.GUI.Districts
         {
             var restrictEmptyingButtonPosition = Inputs.Find(x => x.name == "Restrict EmptyingButton").relativePosition;
 
-            Inputs.Find(x => x.name == "Invert").relativePosition = new Vector3(restrictEmptyingButtonPosition.x - Inputs.Find(x => x.name == "Invert").width - 15f, restrictEmptyingButtonPosition.y);
+            Inputs.Find(x => x.name == "Invert").relativePosition = new Vector3(
+                restrictEmptyingButtonPosition.x - Inputs.Find(x => x.name == "Invert").width - 15f,
+                restrictEmptyingButtonPosition.y);
         }
 
         private void AlignCopyButtons()
         {
             var campusButtonPosition = Inputs.Find(x => x.name == "CampusesButton").relativePosition;
 
-            Inputs.Find(x => x.name == "Copy OptionsButton").relativePosition = new Vector3(campusButtonPosition.x, finalY + 30f);
+            Inputs.Find(x => x.name == "Copy OptionsButton").relativePosition =
+                new Vector3(campusButtonPosition.x, finalY + 30f);
 
             var parksButtonPosition = Inputs.Find(x => x.name == "ParksButton").relativePosition;
 
-            Inputs.Find(x => x.name == "Paste OptionsButton").relativePosition = new Vector3(parksButtonPosition.x, finalY + 30f);
+            Inputs.Find(x => x.name == "Paste OptionsButton").relativePosition =
+                new Vector3(parksButtonPosition.x, finalY + 30f);
         }
 
         private void AlignButtons()

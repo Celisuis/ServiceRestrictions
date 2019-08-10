@@ -113,7 +113,6 @@ namespace ServiceRestrictions.Internal
 
         private void OnCloseEvent(bool value)
         {
-
         }
     }
 }

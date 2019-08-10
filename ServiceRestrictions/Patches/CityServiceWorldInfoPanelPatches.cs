@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
+﻿using System.Reflection;
 using ColossalFramework.UI;
-using CustomizeItExtended.Helpers;
 using Harmony;
-using BuildingHelper = ServiceRestrictions.Helpers.BuildingHelper;
+using ServiceRestrictions.Helpers;
 
 namespace ServiceRestrictions.Patches
 {

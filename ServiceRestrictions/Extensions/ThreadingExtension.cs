@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ICities;
+﻿using ICities;
 using ServiceRestrictions.GUI;
 using ServiceRestrictions.GUI.Districts;
 using ServiceRestrictions.Internal;
@@ -21,7 +17,7 @@ namespace ServiceRestrictions.Extensions
 
             if (Input.GetKeyUp(KeyCode.Escape))
             {
-                if(RestrictedDistrictsPanel.Instance != null)
+                if (RestrictedDistrictsPanel.Instance != null)
                 {
                     if (RestrictedDistrictsPanel.Instance.CampusPanelWrapper != null &&
                         RestrictedDistrictsPanel.Instance.CampusPanelWrapper.isVisible)
@@ -48,7 +44,8 @@ namespace ServiceRestrictions.Extensions
                     }
                 }
 
-                if (ServiceRestrictTool.instance.RestrictedDistrictsPanelWrapper != null && ServiceRestrictTool.instance.RestrictedDistrictsPanelWrapper.isVisible)
+                if (ServiceRestrictTool.instance.RestrictedDistrictsPanelWrapper != null &&
+                    ServiceRestrictTool.instance.RestrictedDistrictsPanelWrapper.isVisible)
                 {
                     ServiceRestrictTool.instance.RestrictedDistrictsPanelWrapper.isVisible = false;
                     UIUtils.DeepDestroy(ServiceRestrictTool.instance.RestrictedDistrictsPanelWrapper);
