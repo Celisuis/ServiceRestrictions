@@ -8,6 +8,8 @@ namespace ServiceRestrictions.Internal.Options
     {
         public List<byte> CoveredDistricts;
 
+        public bool RestrictToSelf;
+
         public bool RestrictEmptying;
 
         public bool Inverted;
